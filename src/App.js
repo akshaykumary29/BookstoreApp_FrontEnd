@@ -8,18 +8,20 @@ import {
 import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
 import MainPage from './pages/mainPage/MainPage';
+import Header from './components/header/Header';
 
 function App() {
   return (
     <div className="App">
       {/* <Login /> */}
       {/* <Signup /> */}
-      <MainPage />
-      <Router>
+      {/* <MainPage /> */}
+      <Header />
+      {/* <Router>
         <Switch>
           <Route path="/" component={MainPage}/>
         </Switch>
-      </Router>
+      </Router> */}
     </div>
   );
 }

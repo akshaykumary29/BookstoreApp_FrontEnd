@@ -1,0 +1,24 @@
+.header-menu {
+    display: flex;
+    // justify-content: center;
+    // text-align: center;
+    margin-left: 164px;
+    .search {
+        // background: #fff;
+        border: 1px solid;
+        border-radius: 5px;
+    }
+
+    .header-icons {
+        display: flex;
+        margin-left: 100%;
+        .header-search-icons {
+            display: flex;
+            margin-left: 30px;
+        }
+        .header-search-icons1 {
+            display: flex;
+            margin-left: 60px;
+        }
+    }
+}
