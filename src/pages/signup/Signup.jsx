@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import '../signup/Signup.scss'
 import { Button, TextField } from "@material-ui/core";
+import { Link, useHistory } from "react-router-dom";
+import UserService from "../../services/UserService";
 
 function Signup() {
+    const service = new UserService();
+    const history = useHistory();
+
     const [inputField, setInputField] = useState({
         fullName: '',
         email: '',
@@ -16,7 +21,7 @@ function Signup() {
 
 
     const changeHandle = (e) => {
-        setInputField({ ... inputField, [e.target.name]: e.target.value })
+        setInputField({...inputField, [e.target.name]: e.target.value })
         console.log(e.target.value);
     }
 
@@ -38,6 +43,21 @@ function Signup() {
         let validated = validation();
         if (!validated) {
             console.log("validated");
+
+            let data = {
+                "fullName": inputField.fullName,
+                "email": inputField.email,
+                "password": inputField.password,
+                "phone": inputField.number
+            }
+            service.register(data)
+            .then((res) => {
+                console.log(res);
+
+                history.push('/login')
+            }).catch((err) => {
+                console.log(err);
+            })
         }
     }
 

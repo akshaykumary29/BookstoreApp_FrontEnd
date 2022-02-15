@@ -1,10 +1,14 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import '../login/Login.scss'
-import { Button, TextField } from '@material-ui/core'
+import { Button, TextField } from '@material-ui/core';
+import { Link, useHistory } from "react-router-dom";
+import UserService from '../../services/UserService';
 
 function Login() {
+    const service = new UserService();
+    const history = useHistory();
 
-       const [inputField, setInputField] = useState({
+    const [inputField, setInputField] = useState({
         email: '',
         password: '',
         emailError: false,
@@ -27,7 +31,7 @@ function Login() {
         let passwordError = inputField.password === '' ? true : false;
 
         setInputField(() => {
-            return {  emailError: emailIdError, passError: passwordError }
+            return { emailError: emailIdError, passError: passwordError }
         })
 
         return emailIdError || passwordError;
@@ -40,6 +44,16 @@ function Login() {
                 "email": inputField.email,
                 "password": inputField.password
             }
+            service.login(data)
+                .then(res => {
+                    console.log(res);
+                    let token = res.data.result.accessToken;
+                    localStorage.setItem("token", token)
+
+                    history.push('/homepage')
+                }).catch((err) => {
+                    console.log(err);
+                })
         }
     }
 
