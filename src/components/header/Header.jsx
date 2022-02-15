@@ -144,7 +144,7 @@ export default function Header(props) {
                         <SearchIconWrapper>
                             <SearchIcon style={{ color: "#fff" }} />
                         </SearchIconWrapper>
-                        {/* <Link to={{ pathname: "/bookstore", state: { searchText: searchText } }}> */}
+                        
                             <StyledInputBase onChange={(searchval) => requestSearch(searchval)}
                                 placeholder="Search"
                                 value={searchText}

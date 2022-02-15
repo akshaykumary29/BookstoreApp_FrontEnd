@@ -9,6 +9,8 @@ import Login from './pages/login/Login';
 import Signup from './pages/signup/Signup';
 import MainPage from './pages/mainPage/MainPage';
 import Header from './components/header/Header';
+import Home from './pages/home/Home';
+import DisplayBook from './components/displayBook/DisplayBook';
 
 function App() {
   return (
@@ -16,10 +18,12 @@ function App() {
       {/* <Login /> */}
       {/* <Signup /> */}
       {/* <MainPage /> */}
-      <Header />
+      {/* <Header /> */}
+      <DisplayBook />
       {/* <Router>
         <Switch>
           <Route path="/" component={MainPage}/>
+          <Route path="/homePage" component={Home}/>
         </Switch>
       </Router> */}
     </div>
