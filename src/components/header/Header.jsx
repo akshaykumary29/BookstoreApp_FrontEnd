@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled, useTheme, alpha } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,10 +7,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import MuiDrawer from '@mui/material/Drawer';
 import AccountCircleOutlined from '@mui/icons-material/AccountCircleOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import InputBase from '@mui/material/InputBase';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import '../header/Header.scss'
-
+import DisplayCart from '../displayCart/DisplayCart';
+import Wishlist from '../wishlist/Wishlist';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -118,8 +120,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 
-
 export default function Header(props) {
+    const history = useHistory()
     const theme = useTheme();
     const [searchText, setSearchText] = useState("")
     const [open, setOpen] = React.useState(false);
@@ -131,6 +133,20 @@ export default function Header(props) {
         setSearchText(searchval.target.value);
         // props.abc(searchval.target.value);
     }
+
+    useEffect(() => {
+     console.log(props.cartLen);
+     console.log(props.wishlistLen);   
+    }, []);
+
+    const DisplayCart= () => {
+        history.push('/cart')
+    }
+
+    const Wishlist= () => {
+        history.push('/wishlist')
+    }
+
     return <div>
         <AppBar position="fixed" >
             <Toolbar className='header-menu' >
@@ -156,7 +172,8 @@ export default function Header(props) {
                     <div className='header-icons' style={{ display: "flex", marginLeft: "100%" }}>
 
                         <Typography className='header-search-icons' style={{ display: "flex", marginLeft: "30px" }}><AccountCircleOutlined style={{ color: "#fff" }} />Akshaykumar</Typography>
-                        <Typography className='header-search-icons1' style={{ display: "flex", marginLeft: "60px" }}><ShoppingCartOutlinedIcon style={{ color: "#fff" }} />Cart</Typography>
+                        <Typography className='header-search-icons1' style={{ display: "flex", marginLeft: "60px" }}><ShoppingCartOutlinedIcon style={{ color: "#fff" }} onClick={() => DisplayCart()} /> {props.cartLen} </Typography>
+                        <Typography className='header-search-icons1' style={{ display: "flex", marginLeft: "60px" }}><FavoriteBorderOutlinedIcon style={{ color: "#fff" }} onClick={() => Wishlist()} /> {props.wishlistLen} </Typography>
 
                     </div>
                 </Typography>

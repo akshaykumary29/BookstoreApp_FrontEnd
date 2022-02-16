@@ -18,6 +18,9 @@ class CartService {
     cartItemQuantity(cartItem_id, data) {
         return axios.putmethod(`${baseUrl}cart_item_quantity/${cartItem_id}`, data, headerConfig)
     }
+    removeCart(cartItem_id) {
+        return axios.deletemethod(`${baseUrl}remove_cart_item/${cartItem_id}`, headerConfig)
+    }
 }
 
 export default CartService;

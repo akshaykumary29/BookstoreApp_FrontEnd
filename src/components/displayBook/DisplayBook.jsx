@@ -55,10 +55,10 @@ function DisplayBook() {
             let x = cart.filter(x => x._id === item._id);
             console.log(x);
         if(x) {
-            btn = <Button>ADDED TO BAG</Button>
+            btn = <Button variant="contained" >ADDED TO BAG</Button>
         }
         if(wishlist.indexOf(item._id)>-1) {
-            btn = <Button>ADDED TO WISHLIST</Button>
+            btn = <Button variant="contained" >ADDED TO WISHLIST</Button>
         }
         else {
             btn = (
@@ -72,23 +72,23 @@ function DisplayBook() {
     }
 
     return <div>
-        <Box className="book-container" component="main" sx={{ flexGrow: 1.5, p: 8 }} >
+        <Box className="bookContain" component="main" sx={{ flexGrow: 1.5, p: 8 }} >
             <p className="books" >Books</p>
-            <p className="item">({book.length})</p>
+            <p className="book-len">({book.length})</p>
             <select className='select-menu'>
                 <option name="">Sort by relevance</option>
                 <option name="hightolow">Price:High to Low</option>
                 <option name="lowtohigh">Price:Low to High</option>
                 <option name="newarrival">Nweest Arrivals</option>
             </select>
-            <div className="display-book" >
+            <div className="displayCard" >
                 {
                     book.map((item, index) => (
                         <div className="card" key={index} >
                             <div className="imageCard" >
                                 <img src={dontmake} alt="book image" />
                             </div>
-                            <div className="detail-card" >
+                            <div className="detailsCard" >
                                 <p id="name" >Book: {item.bookName} </p>
                                 <p id="author" >Author: {item.author} </p>
                                 <p id="price" >Rs.- {item.price} </p>

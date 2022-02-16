@@ -10,6 +10,8 @@ function DisplayCart() {
     const service = new CartService();
 
     const [cart, setCart] = useState([]);
+    const [wishlist, setWishList] = useState([])
+    
 
     useEffect(() => {
         getCart();
@@ -80,13 +82,13 @@ function DisplayCart() {
 
     return <div>
         <Header cartLen={cart.length ? cart.length : 0} />
-        <Box className='bookContain' component="main" sx={{ flexGrow: 1, p: 8 }}>
+        <Box className='cartContain' component="main" sx={{ flexGrow: 1, p: 8 }}>
             <h1>MyCart<p className='book-len'> {cart.length}</p></h1>
 
             <div className='displayCard'>
                 {
                     cart.map((cart, index) => (
-                        <div key={cart.product_id._id} className='card'>
+                        <div key={cart.product_id._id} className='card1'>
                             <div className='imageCard'>
                                 <img src={cart.product_id.dontmake} alt="img" />
                             </div>

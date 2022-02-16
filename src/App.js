@@ -12,6 +12,7 @@ import Header from './components/header/Header';
 import Home from './pages/home/Home';
 import DisplayBook from './components/displayBook/DisplayBook';
 import DisplayCart from './components/displayCart/DisplayCart';
+import Wishlist from './components/wishlist/Wishlist';
 
 function App() {
   return (
@@ -19,11 +20,14 @@ function App() {
       {/* <MainPage /> */}
       {/* <DisplayBook /> */}
       {/* <Home /> */}
-      <DisplayCart />
+      {/* <DisplayCart /> */}
+      <Wishlist />
       {/* <Router>
         <Switch>
           <Route path="/" component={MainPage}/>
           <Route path="/home" component={Home}/>
+          <Route path="/cart" component={DisplayCart} />
+          <Route path="/wishlist" component={Wishlist} />
         </Switch>
       </Router> */}
     </div>

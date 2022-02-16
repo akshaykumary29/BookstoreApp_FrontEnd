@@ -1,4 +1,4 @@
-.book-container {
+.bookContain {
     .select-menu {
         border: 1px solid #E2E2E2;
         border-radius: 1px;
@@ -11,11 +11,11 @@
         // margin: -25px 100px;
         margin: 0vh 10.5vw;
     }
-    .item {
+    .book-len {
         font-size: 13px;
         margin: 2.5vh 58vw 2.5vh -16vw;
     }
-    .display-book {
+    .displayCard {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
@@ -30,7 +30,7 @@
                 min-height: 100px;
             }
         }
-        .detail-card {
+        .detailsCard {
             padding: 0px 20px;
             text-align: start;
             #name{

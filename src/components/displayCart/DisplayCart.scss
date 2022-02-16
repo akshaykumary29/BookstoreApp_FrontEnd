@@ -1,0 +1,52 @@
+.cartContain {
+    
+    .book-len {
+        font-size: 12px;
+        display: flex;
+        flex-direction: row;
+        margin: -25px 100px;
+    }
+    .displayCard {
+        width: 70%;
+        min-height: 200px;
+        border: 1px solid #f5f5f5;
+        margin: 40px;
+        .card1 {
+            border: 0px;
+            margin: 0px;
+            display: flex;
+            .imageCard {
+                background: #fff;
+                text-align: center;
+                padding: 10px;
+                min-height: 100px;
+            }
+        }
+        .detailsCard {
+            padding: 40px 20px;
+            #name {
+                height: 10px;
+            }
+            #author {
+                font-size: 12px;
+                color: #bbb;
+                height: 10px;
+            }
+            .btnContainer {
+                display: flex;
+            .MuiButton-contained {
+                color: #fff;
+                box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+                background-color: #a52a2a;
+                font-size: 12px;
+                width: 40%;
+                justify-content: space-between;
+            }
+            .cartQnt {
+                text-align: center;
+                margin: 5px;
+            }
+            }
+        }
+    }
+}
