@@ -9,15 +9,15 @@ let headerConfig = {
 }
 
 const axios = new AxiosService();
+class CartService {
 
-class UserService {
-    register(data) {
-        return axios.postmethod(`${baseUrl}registration`, data)
+    getCart() {
+        return axios.getmethod(`${baseUrl}get_cart_items`, headerConfig)
     }
 
-    login(data) {
-        return axios.postmethod(`${baseUrl}login`, data)
+    cartItemQuantity(cartItem_id, data) {
+        return axios.putmethod(`${baseUrl}cart_item_quantity/${cartItem_id}`, data, headerConfig)
     }
 }
 
-export default UserService;
+export default CartService;

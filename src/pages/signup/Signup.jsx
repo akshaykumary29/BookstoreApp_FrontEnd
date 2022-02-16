@@ -69,6 +69,7 @@ function Signup() {
                 type="text"
                 label="Full Name"
                 variant='outlined'
+                name="fullName"
                 onChange={(e) => {changeHandle(e)}}
                 // value={inputField.fullName}
                 error={inputField.fullNameError}
@@ -97,6 +98,7 @@ function Signup() {
                 id='outlined-password'
                 type="password"
                 label="Password"
+                name="password"
                 variant='outlined'
                 onChange={(e) => {changeHandle(e)}}
                 // value={inputField.password}
@@ -111,6 +113,7 @@ function Signup() {
                 id='outlined-required'
                 label="MobileNumber"
                 type="number"
+                name="number"
                 variant='outlined'
                 onChange={(e) => {changeHandle(e)}}
                 // value={inputField.number}

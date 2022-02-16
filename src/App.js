@@ -11,19 +11,19 @@ import MainPage from './pages/mainPage/MainPage';
 import Header from './components/header/Header';
 import Home from './pages/home/Home';
 import DisplayBook from './components/displayBook/DisplayBook';
+import DisplayCart from './components/displayCart/DisplayCart';
 
 function App() {
   return (
     <div className="App">
-      {/* <Login /> */}
-      {/* <Signup /> */}
       {/* <MainPage /> */}
-      {/* <Header /> */}
-      <DisplayBook />
+      {/* <DisplayBook /> */}
+      {/* <Home /> */}
+      <DisplayCart />
       {/* <Router>
         <Switch>
           <Route path="/" component={MainPage}/>
-          <Route path="/homePage" component={Home}/>
+          <Route path="/home" component={Home}/>
         </Switch>
       </Router> */}
     </div>

@@ -15,18 +15,15 @@ function Login() {
         passError: false
     })
 
-    // const [error, setError] = useState({ ,  });
-
     const inputsHandler = (e) => {
         setInputField({
             // return { [e.target.name]: e.target.value }
             // console.log(e.target.value);
-            ...inputField, email: e.target.value
+            ...inputField, [e.target.name]: e.target.value
         })
     }
 
     const validation = () => {
-        // let isError = false;
         let emailIdError = inputField.email === '' ? true : false;
         let passwordError = inputField.password === '' ? true : false;
 
@@ -45,12 +42,12 @@ function Login() {
                 "password": inputField.password
             }
             service.login(data)
-                .then(res => {
+                .then((res) => {
                     console.log(res);
                     let token = res.data.result.accessToken;
                     localStorage.setItem("token", token)
 
-                    history.push('/homepage')
+                    history.push('/home')
                 }).catch((err) => {
                     console.log(err);
                 })
@@ -63,7 +60,7 @@ function Login() {
         <div className="login">
 
             <TextField
-                name="emailId"
+                name="email"
                 id="outlined-email"
                 className="emailInput"
                 type="text"

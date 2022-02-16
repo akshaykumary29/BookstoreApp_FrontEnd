@@ -11,7 +11,13 @@ const axios = new AxiosService();
 
 class BookService {
     getBooks() {
-        return axios.getmethod(`${baseUrl}get/book`)
+        return axios.getmethod(`${baseUrl}get/book`, headerConfig)
+    }
+    addToCart(product_id) {
+        return axios.postmethod(`${baseUrl}add_cart_item/${product_id}`,{}, headerConfig)
+    }
+    addBookToWishList(product_id) {
+        return axios.postmethod(`${baseUrl}add_wish_list/${product_id}`,{}, headerConfig)
     }
 }
 
