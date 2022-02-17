@@ -6,9 +6,9 @@ import dontmake from "../../assests/dontmake.png"
 import { Button } from "@material-ui/core";
 
 
-function DisplayBook() {
+function DisplayBook(props) {
     const service = new BookService();
-    const [book, setBook] = useState([]);
+    const [books, setBooks] = useState([]);
     const [cart, setCart] = useState([]);
     const [wishlist, setWishlist] = useState([]);
 
@@ -17,7 +17,7 @@ function DisplayBook() {
         service.getBooks()
             .then((res) => {
                 console.log(res);
-                setBook(res.data.result);
+                setBooks(res.data.result);
             }).catch((err) => {
                 console.log(err);
             })
@@ -32,6 +32,7 @@ function DisplayBook() {
             .then((res) => {
                 console.log(res);
                 setCart(res.data.result);
+                props.getCart()
                 getAllBooks();
             }).catch((err) => {
                 console.log(err);
@@ -44,6 +45,7 @@ function DisplayBook() {
         .then((res) => {
             console.log(res);
             setWishlist(res.data.result);
+            props.getWishlist()
             getAllBooks();
         }).catch((err) => {
             console.log(err);
@@ -52,21 +54,22 @@ function DisplayBook() {
 
     const getbutton = (item) => {
         let btn = '';
-            let x = cart.filter(x => x._id === item._id);
-            console.log(x);
-        if(x) {
+        let cartItem=(props.cart).find((data)=>data.bookName===item.bookName);
+        let wishItem=(props.wishlist).find((data)=>data.bookName===item.bookName);
+        console.log(cartItem);
+        if(cartItem) {
             btn = <Button variant="contained" >ADDED TO BAG</Button>
         }
-        if(wishlist.indexOf(item._id)>-1) {
-            btn = <Button variant="contained" >ADDED TO WISHLIST</Button>
+        else if(wishItem){
+            btn=<Button variant="contained"  >ADDEDTOWISHLIST</Button>
         }
         else {
-            btn = (
+            btn =
                 <div>
-                    <Button onClick={() => addBookToCart(item)} >ADD TO BAG</Button>
-                    <Button onClick={() => addBookToWishList(item)} >WISHLIST</Button>
+                    <Button variant="contained" onClick={() => addBookToCart(item)} >ADD TO BAG</Button>
+                    <Button variant="contained" onClick={() => addBookToWishList(item)} >WISHLIST</Button>
                 </div>
-            )
+            
         }
         return btn;
     }
@@ -74,7 +77,7 @@ function DisplayBook() {
     return <div>
         <Box className="bookContain" component="main" sx={{ flexGrow: 1.5, p: 8 }} >
             <p className="books" >Books</p>
-            <p className="book-len">({book.length})</p>
+            <p className="book-len">({books.length})</p>
             <select className='select-menu'>
                 <option name="">Sort by relevance</option>
                 <option name="hightolow">Price:High to Low</option>
@@ -83,19 +86,20 @@ function DisplayBook() {
             </select>
             <div className="displayCard" >
                 {
-                    book.map((item, index) => (
-                        <div className="card" key={index} >
+                    books.map((book, index) => (
+                        <div className="card" key={book._id} >
                             <div className="imageCard" >
                                 <img src={dontmake} alt="book image" />
                             </div>
                             <div className="detailsCard" >
-                                <p id="name" >Book: {item.bookName} </p>
-                                <p id="author" >Author: {item.author} </p>
-                                <p id="price" >Rs.- {item.price} </p>
+                                <p id="name" >Book: {book.bookName} </p>
+                                <p id="author" >Author: {book.author} </p>
+                                <p id="price" >Rs.- {book.price} </p>
                             </div>
                             <div className="btnContainer" >
-                                <Button variant="contained" onClick={() => addBookToCart(item)} >ADD TO BAG</Button>
-                                <Button variant="outlined" className="wishlist" onClick={() => addBookToWishList(item)} > WISHLIST </Button>
+                                {getbutton(book)}
+                                {/* <Button variant="contained" onClick={() => addBookToCart(item)} >ADD TO BAG</Button>
+                                <Button variant="outlined" className="wishlist" onClick={() => addBookToWishList(item)} > WISHLIST </Button> */}
                             </div>
                         </div>
                     ))

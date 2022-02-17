@@ -5,16 +5,49 @@ import Header from "../header/Header";
 import { Button } from "@material-ui/core";
 import { Box } from "@mui/material";
 import CartService from "../../services/CartService";
+import WishlistService from "../../services/WishlistService";
+import OrderService from "../../services/OrderService";
+import Footer from "../footer/Footer";
+import dontmake from '../../assests/dontmake.png';
+import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import { Radio, TextField, RadioGroup, FormControl, FormLabel, FormControlLabel } from "@mui/material";
+import UserService from "../../services/UserService";
+import { useHistory } from "react-router-dom";
+
 
 function DisplayCart() {
+    const history = useHistory();
     const service = new CartService();
-
+    const wishservice = new WishlistService();
+    const orderService = new OrderService();
     const [cart, setCart] = useState([]);
     const [wishlist, setWishList] = useState([])
-    
+    const [ordersumm, setOrderSumm] = useState([])
+    const [orderbutton, setOrderbutton] = useState(true)
+    const [checkout, setCheckout] = useState(true)
+    const [fields, setFields] = useState({
+        fullAddress: "",
+        city: "",
+        state: "",
+        addressType: ""
+    })
+
+    const [continuebutton, setContinuebutton] = useState(true)
+
+    const changebutton = () => {
+        setOrderbutton(false)
+    }
+
+    const orderSummary = () => {
+        setContinuebutton(false)
+        setCheckout(false)
+    }
 
     useEffect(() => {
         getCart();
+        getWishlist();
+        // customerDetails();
     }, []);
 
 
@@ -23,6 +56,16 @@ function DisplayCart() {
             .then((res) => {
                 console.log(res);
                 setCart(res.data.result);
+            }).catch((err) => {
+                console.log(err);
+            })
+    }
+
+    const getWishlist = () => {
+        wishservice.getWishlists()
+            .then((res) => {
+                console.log(res);
+                setWishList(res.data.result)
             }).catch((err) => {
                 console.log(err);
             })
@@ -38,76 +81,238 @@ function DisplayCart() {
         service.cartItemQuantity(val._id, data)
             .then(() => {
                 service.getCart()
-                .then((res) => {
-                    console.log(res);
-                    setCart(res.data.result);
-                }).catch((err) => {
-                    console.log(err);
-                })
+                    .then((res) => {
+                        console.log(res);
+                        setCart(res.data.result);
+                    }).catch((err) => {
+                        console.log(err);
+                    })
                 getCart()
             }).catch((err) => {
                 console.log(err);
             })
     }
 
-    const decrement= (val) => {
+    const decrement = (val) => {
         let data = {
             "quantityToBuy": val.quantityToBuy - 1
         }
         service.cartItemQuantity(val._id, data)
-        .then((res) => {
-            service.getCart()
-            .then(() => {
-                console.log(res);
-                setCart(res.data.result);
+            .then((res) => {
+                service.getCart()
+                    .then(() => {
+                        console.log(res);
+                        setCart(res.data.result);
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+                getCart()
             }).catch((err) => {
                 console.log(err);
             })
-            getCart()
-        }).catch((err) => {
-            console.log(err);
-        })
     }
 
     const removeCart = (val) => {
         service.removeCart(val._id)
-        .then((res) => {
-            console.log(res);
-            setCart(res.data.result)
-            getCart()
-        }).catch((err) => {
-            console.log(err);
+            .then((res) => {
+                console.log(res);
+                setCart(res.data.result)
+                getCart()
+            }).catch((err) => {
+                console.log(err);
+            })
+    }
+
+    const placeOrder = (val) => {
+        console.log(val);
+        let data;
+        val.map((order) => {
+            console.log(order);
+            data = {
+                "order": [
+                    {
+                        "product_id": order.product_id._id,
+                        "product_name": order.product_id.bookName,
+                        "product_quantity": order.product_id.quantityToBuy,
+                        "product_price": order.product_id.price
+                    }
+                ]
+            }
+            console.log(data);
+            orderService.order(data)
+            .then((res) => {
+                console.log(res);
+                setOrderSumm(res.data.result)
+            }).catch((err) => {
+                console.log(err);
+            })
         })
     }
 
-    return <div>
-        <Header cartLen={cart.length ? cart.length : 0} />
-        <Box className='cartContain' component="main" sx={{ flexGrow: 1, p: 8 }}>
-            <h1>MyCart<p className='book-len'> {cart.length}</p></h1>
+    const changefield = (e) => {
+        setFields(prviousvalues => {
+            return { ...prviousvalues, [e.target.name]: e.target.value }
+        })
+    }
 
-            <div className='displayCard'>
+    const customerDetails = () => {
+        console.log(fields.addressType);
+        let data = {
+            "addressType": fields.addressType,
+            "fullAddress": fields.fullAddress,
+            "city": fields.city,
+            "state": fields.state
+        }
+        console.log(data);
+        UserService.customerDetails(data)
+            .then((res) => {
+                console.log(res);
+            }).catch((err) => {
+                console.log(err);
+            })
+    }
+
+    const callfunctions = () => {
+        customerDetails()
+        orderSummary()
+    }
+
+    const checkoutorder = () => {
+        history.pushState('/checkout')
+    }
+
+    return <div>
+        <Header cart={cart.length} wishlist={wishlist.length} />
+        
+        <div className='maincart-container'>
+            <h3 className='heading'>Home/ My cart</h3>
+            <div className='cart-container'>
+                <h3 className='my-cart'>My Cart({cart.length})</h3>
                 {
-                    cart.map((cart, index) => (
-                        <div key={cart.product_id._id} className='card1'>
-                            <div className='imageCard'>
-                                <img src={cart.product_id.dontmake} alt="img" />
+                    cart.map((cart) => {
+                        return <div >
+                            <div className='content-container'>
+                                <div className='image-cart'><img src={dontmake} alt="image" style={{ height: "105px" }, { width: "100 px" }} /></div>
+                                <div className='cart-description'>
+                                    <div className='book-nam'>{cart.product_id.bookName}</div>
+                                    <div className='author-nam'>by: {cart.product_id.author}</div>
+                                    <div className='pricetage'>Rs. {cart.product_id.price}</div>
+                                </div>
                             </div>
-                            <div className='detailsCard'>
-                                <p id="name">{cart.product_id.bookName}</p>
-                                <p id="author">by {cart.product_id.author}</p>
-                                <p id="price" >Rs.{cart.product_id.price}</p>
-                            </div>
-                            <div className="btnContainer">
-                                {/* <Button variant="contained" onClick={() => addToWishlist(list)} >AddToWishlist</Button> */}
-                                <Button variant="contained" onClick={() => increament(cart)} >+</Button>
-                                <p className='cartQnt'>{cart.quantityToBuy}</p>
-                                <Button variant="outlined" className="blackFont" onClick={() => decrement(cart)} >-</Button>
-                                <Button variant="outlined" className="blackFont" onClick={() => removeCart(cart)} > Remove</Button>
+                            <div className='update-cart'>
+                                <RemoveCircleOutlineOutlinedIcon htmlColor="grey" onClick={() => { decrement(cart) }} />
+                                <div className='cart-quantity'>{cart.quantityToBuy}</div>
+                                <AddCircleOutlineOutlinedIcon htmlColor="grey" onClick={() => { increament(cart) }} />
+                                <div className='remove' onClick={() => removeCart(cart)}>Remove</div>
                             </div>
                         </div>
-                    ))}
+                    })
+                }
+                {
+                    orderbutton ? <button className='button-order' onClick={() => { changebutton() }}  >Place order</button>
+                        : ""
+                }
             </div>
-        </Box>
+            {
+                orderbutton ? <div className='customer-details'>
+                    <div className='inside-details'>Customer Details</div></div>
+                    :
+                    <div className='customer-detail'>
+                        <div className='inside-customerdetails'>
+                            <h3 className='heading'>Customer Details</h3>
+
+                            <div className='text-fields'>
+                                <div className='name-field'>
+                                    <TextField size="medium" name="fullname" id="outlined-basic" label="Full Name" variant="outlined" style={{ width: "250px" }} onChange={(e) => changefield(e)} />
+                                </div>
+                                <div className='mobile-num'>
+                                    <TextField name="mobilenumber" id="outlined-basic" label="Mobile Number" variant="outlined" style={{ width: "250px" }} onChange={(e) => changefield(e)} />
+                                </div>
+                            </div>
+                            <div className='text-fields'>
+                                <div className='name-field'>
+                                    <TextField name="pincode" size="medium" id="outlined-basic" label="Pin code" variant="outlined" style={{ width: "250px" }} onChange={(e) => { changefield(e) }} />
+                                </div>
+                                <div className='mobile-num'>
+                                    <TextField name="locality" id="outlined-basic" label="Locality" variant="outlined" style={{ width: "250px" }} onChange={(e) => changefield(e)} />
+                                </div>
+                            </div>
+                            <div className='Address'>
+                                <TextField name="address" id="outlined-basic" label="Address" variant="outlined" style={{ width: "532px" }} multiline="true" rows="4" onChange={(e) => { changefield(e) }} />
+                            </div>
+                            <div className='text-fields'>
+                                <div className='name-field'>
+                                    <TextField name="city" size="medium" id="outlined-basic" label="City/town" variant="outlined" style={{ width: "250px" }} onChange={(e) => { changefield(e) }} />
+                                </div>
+                                <div className='mobile-num'>
+                                    <TextField name="landmark" id="outlined-basic" label="Landmark" variant="outlined" style={{ width: "250px" }} onChange={(e) => { changefield(e) }} />
+                                </div>
+                            </div>
+
+                            <div className='radio'>
+
+                                <FormControl>
+                                    <FormLabel id="demo-row-radio-buttons-group-label" style={{ marginTop: "5%", marginLeft: "-265%" }}>Type</FormLabel>
+                                    <RadioGroup
+                                        row
+                                        aria-labelledby="demo-row-radio-buttons-group-label"
+                                    // name="addressType"
+                                    >
+
+                                        <FormControlLabel name="addressType" value="Home" control={<Radio />} label="Home" onClick={(e) => { changefield(e) }} />
+                                        <FormControlLabel name="addressType" value="Work" control={<Radio />} label="Work" onClick={(e) => { changefield(e) }} />
+                                        <FormControlLabel name="addressType" value="other" control={<Radio />} label="Other" onClick={(e) => { changefield(e) }} />
+
+                                    </RadioGroup>
+                                </FormControl>
+
+                            </div>
+                            {
+                                continuebutton ? <button className='continue-button' onClick={() => callfunctions()} >Continue</button>
+                                    : ""
+                            }
+                        </div>
+
+                    </div>
+
+            }
+
+
+            {
+                checkout ?
+
+                    <div className='customer-details'>
+                        <div className='inside-details'>Order Summary</div>
+                    </div>
+                    :
+                    <div className='order-details'>
+                        <div className='inside-orderdetails'>Order Summary</div>
+                        {
+                            cart.map((cart) => {
+                                return <div >
+                                    <div className='content-containers'>
+                                        <div className='image-carts'><img src={dontmake} alt="image" style={{ height: "105px" }, { width: "100 px" }} /></div>
+                                        <div className='cart-descriptions'>
+                                            <div className='book-nams'>{cart.product_id.bookName}</div>
+                                            <div className='author-nams'>{cart.product_id.author}</div>
+                                            <div className='pricetages'>{cart.product_id.price}</div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            })
+
+                        }
+                        <button className='checkout-button' onClick={() => checkoutorder()}>checkout</button>
+                    </div>
+            }
+
+        </div>
+
+        <div className="footer" >
+            <Footer />
+        </div>
     </div>;
 }
 

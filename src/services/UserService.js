@@ -1,6 +1,6 @@
 import AxiosService from "./AxiosServices";
 
-let baseUrl = "https://new-bookstore-backend.herokuapp.com/bookstore_user/";
+let baseUrl = "https://bookstore.incubation.bridgelabz.com/bookstore_user/";
 
 let headerConfig = {
     headers: {
@@ -17,6 +17,10 @@ class UserService {
 
     login(data) {
         return axios.postmethod(`${baseUrl}login`, data)
+    }
+    
+    customerDetails(data) {
+        return axios.putmethod(`${baseUrl}edit_user`, data, headerConfig)
     }
 }
 

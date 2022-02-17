@@ -13,6 +13,7 @@ import Home from './pages/home/Home';
 import DisplayBook from './components/displayBook/DisplayBook';
 import DisplayCart from './components/displayCart/DisplayCart';
 import Wishlist from './components/wishlist/Wishlist';
+import CheckoutOrder from './components/checkout/CheckoutOrder';
 
 function App() {
   return (
@@ -20,8 +21,9 @@ function App() {
       {/* <MainPage /> */}
       {/* <DisplayBook /> */}
       {/* <Home /> */}
-      {/* <DisplayCart /> */}
-      <Wishlist />
+      <DisplayCart />
+      {/* <Wishlist /> */}
+      {/* <CheckoutOrder /> */}
       {/* <Router>
         <Switch>
           <Route path="/" component={MainPage}/>

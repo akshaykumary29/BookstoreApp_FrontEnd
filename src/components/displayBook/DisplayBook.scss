@@ -1,61 +1,55 @@
-.bookContain {
-    .select-menu {
-        border: 1px solid #E2E2E2;
-        border-radius: 1px;
-        margin-left: 68%;
+.bookContain{
+    .select-menu{
+        float: right;
     }
-    .books {
-        font-size: 20px;
+    .book-len{
+        font-size: 12px;
         display: flex;
-        // flex-direction: row;
-        // margin: -25px 100px;
-        margin: 0vh 10.5vw;
+        flex-direction: row;
+        margin: -25px 100px;
     }
-    .book-len {
-        font-size: 13px;
-        margin: 2.5vh 58vw 2.5vh -16vw;
+.displayCard{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 40px;
+    .card{
+        border: 1px solid #bbb;
+        margin: 10px;
+        .imageCard{
+            background: #f7f7f7f7;
+            text-align: center;
+            padding: 10px;
+            min-height: 100px;
+        }
     }
-    .displayCard {
+    .detailsCard{
+        text-align: start;
+        padding: 0px 20px;
+        #name{
+            height: 10px;
+        }
+        #author{
+            font-size: 12px;
+            color: #bbb;
+            height: 10px;
+        }
+    }
+    .btnContainer{
         display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin: 15px;
-        .card {
-            border: 1px solid #bbb;
-            margin: 10px;
-            .imageCard {
-                background: #f7f7f7f7;
-                text-align: center;
-                padding: 20px;
-                min-height: 100px;
-            }
+        padding: 0px 20px 20px 20px;
+        justify-content: space-between;
+        .MuiButton-contained {
+            color: #fff;
+            box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+            background-color: #a52a2a;
+            font-size: 12px;
+            width: 40%;
         }
-        .detailsCard {
-            padding: 0px 20px;
-            text-align: start;
-            #name{
-                height: 10px;
-            }
-            #author{
-                font-size: 12px;
-                color: #bbb;
-                height: 10px;
-            }
-        }
-        .btnContainer {
-            display: flex;
-            padding: 0px 15px 10px 10px;
-            .MuiButton-contained {
-                color: #fff;
-                box-shadow: 0px 3px 1px -2px rbg(0 0 0 / 20%), 0px 2px 2px 0px rbg(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
-                background-color: #a52a2a;
-                font-size: 12px;
-                width: 40%;
-            }
-            .cartQnt {
-                text-align: center;
-                margin: 5px;
-            }
+        .cartQnt{
+            text-align: center;
+            margin: 5px;
         }
     }
+}
 }
