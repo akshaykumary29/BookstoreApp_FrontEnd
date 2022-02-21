@@ -70,7 +70,6 @@ function Login() {
                 onChange={(e) => inputsHandler(e)}
                 // value={inputField.email}
                 error={inputField.emailError}
-            // helpertext={error.emailError ? "email required" : " "}
             >
 
             </TextField><br></br>
@@ -86,7 +85,6 @@ function Login() {
                 onChange={(e) => inputsHandler(e)}
                 // value={inputField.password}
                 error={inputField.passError}
-            // helpertext={error.passError ? "password required" : " "} 
             >
 
             </TextField>

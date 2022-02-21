@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -21,17 +21,18 @@ function App() {
       {/* <MainPage /> */}
       {/* <DisplayBook /> */}
       {/* <Home /> */}
-      <DisplayCart />
+      {/* <DisplayCart /> */}
       {/* <Wishlist /> */}
       {/* <CheckoutOrder /> */}
-      {/* <Router>
-        <Switch>
-          <Route path="/" component={MainPage}/>
+      <Router>
+        {/* <Switch> */}
+          <Route path="/" component={MainPage} exact />
           <Route path="/home" component={Home}/>
           <Route path="/cart" component={DisplayCart} />
           <Route path="/wishlist" component={Wishlist} />
-        </Switch>
-      </Router> */}
+          <Route path="/checkout" component={CheckoutOrder} />
+        {/* </Switch> */}
+      </Router>
     </div>
   );
 }

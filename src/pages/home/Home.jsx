@@ -15,7 +15,8 @@ function Home(props) {
         getCart();
         getWishlist();
     }, []);
-    const getCart= () => {
+
+    const getCart = () => {
         cartservice.getCart()
         .then((res) => {
             console.log(res);
@@ -27,7 +28,7 @@ function Home(props) {
 
     const getWishlist = () => {
         wishlistservice.getWishlists()
-        .then(res=>{
+        .then((res) =>{
             console.log(res)
             setWishList(res.data.result);
         

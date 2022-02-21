@@ -3,7 +3,10 @@
     // justify-content: center;
     // text-align: center;
     margin-left: 164px;
-    .search {
+    .header-title {
+        color: white;
+    }
+    .header-search {
         // background: #fff;
         border: 1px solid;
         border-radius: 5px;
@@ -21,4 +24,36 @@
             margin-left: 60px;
         }
     }
+}
+
+@media screen and(max-width:600px) {
+    .header-search{
+        width: 100px !important;
+        border-radius: 30px;
+    }
+        .header-icons{
+            margin: 0px !important;
+        }
+            .header-search-icons{
+                margin: 0px !important;
+            }
+                .header-search-icons1{
+                    margin: 0px !important;
+                }
+}
+
+@media screen and(max-width:992px) {
+    .header-search{
+        width: 100px !important;
+        border-radius: 30px;
+    }
+        .header-icons{
+            margin: 10px !important;
+        }
+            .header-search-icons{
+                margin: 10px !important;
+            }
+                .header-search-icons1{
+                    margin: 10px !important;
+                }
 }

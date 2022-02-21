@@ -21,7 +21,7 @@ function Signup() {
 
 
     const changeHandle = (e) => {
-        setInputField({...inputField, [e.target.name]: e.target.value })
+        setInputField({ ...inputField, [e.target.name]: e.target.value })
         console.log(e.target.value);
     }
 
@@ -33,13 +33,13 @@ function Signup() {
         const numError = inputField.number === '' ? true : false;
 
         setInputField(() => {
-            return { fullNameError: nameError, emailError: mailError, passwordError: passError, numberError: numError}
+            return { fullNameError: nameError, emailError: mailError, passwordError: passError, numberError: numError }
         })
 
         return nameError || mailError || passError || numError
     }
 
-    const next=() => {
+    const next = () => {
         let validated = validation();
         if (!validated) {
             console.log("validated");
@@ -51,13 +51,13 @@ function Signup() {
                 "phone": inputField.number
             }
             service.register(data)
-            .then((res) => {
-                console.log(res);
+                .then((res) => {
+                    console.log(res);
 
-                history.push('/login')
-            }).catch((err) => {
-                console.log(err);
-            })
+                    history.push('/login')
+                }).catch((err) => {
+                    console.log(err);
+                })
         }
     }
 
@@ -70,11 +70,11 @@ function Signup() {
                 label="Full Name"
                 variant='outlined'
                 name="fullName"
-                onChange={(e) => {changeHandle(e)}}
+                onChange={(e) => { changeHandle(e) }}
                 // value={inputField.fullName}
                 error={inputField.fullNameError}
-                // helpertext={error.fullNameError ? "fullname is required" : " "} 
-                >
+            // helpertext={error.fullNameError ? "fullname is required" : " "} 
+            >
 
             </TextField>
 
@@ -85,11 +85,11 @@ function Signup() {
                 name="email"
                 label="EmaiId"
                 variant='outlined'
-                onChange={(e) => {changeHandle(e)}}
+                onChange={(e) => { changeHandle(e) }}
                 // value={inputField.email}
                 error={inputField.emailError}
-                // helpertext={error.emailError ? "email required" : " "} 
-                >
+            // helpertext={error.emailError ? "email required" : " "} 
+            >
 
             </TextField>
 
@@ -100,11 +100,11 @@ function Signup() {
                 label="Password"
                 name="password"
                 variant='outlined'
-                onChange={(e) => {changeHandle(e)}}
+                onChange={(e) => { changeHandle(e) }}
                 // value={inputField.password}
                 error={inputField.passwordError}
-                // helpertext={error.passwordError ? "password required" : " "} 
-                >
+            // helpertext={error.passwordError ? "password required" : " "} 
+            >
 
             </TextField>
 
@@ -115,11 +115,11 @@ function Signup() {
                 type="number"
                 name="number"
                 variant='outlined'
-                onChange={(e) => {changeHandle(e)}}
+                onChange={(e) => { changeHandle(e) }}
                 // value={inputField.number}
                 error={inputField.numberError}
-                // helpertext={error.numberError ? "phonenumber required" : " "} 
-                >
+            // helpertext={error.numberError ? "phonenumber required" : " "} 
+            >
 
             </TextField>
 

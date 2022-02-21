@@ -173,12 +173,12 @@ function DisplayCart() {
     }
 
     const callfunctions = () => {
-        customerDetails()
+        // customerDetails()
         orderSummary()
     }
 
     const checkoutorder = () => {
-        history.pushState('/checkout')
+        history.push('/checkout')
     }
 
     return <div>
@@ -256,6 +256,7 @@ function DisplayCart() {
                                     <RadioGroup
                                         row
                                         aria-labelledby="demo-row-radio-buttons-group-label"
+                                        style={{ marginTop: "5%", marginLeft: "-85%" }}
                                     // name="addressType"
                                     >
 
@@ -295,7 +296,7 @@ function DisplayCart() {
                                         <div className='cart-descriptions'>
                                             <div className='book-nams'>{cart.product_id.bookName}</div>
                                             <div className='author-nams'>{cart.product_id.author}</div>
-                                            <div className='pricetages'>{cart.product_id.price}</div>
+                                            <div className='pricetages'>Rs. {cart.product_id.price}</div>
                                         </div>
 
                                     </div>
@@ -310,9 +311,9 @@ function DisplayCart() {
 
         </div>
 
-        <div className="footer" >
+        {/* <div > */}
             <Footer />
-        </div>
+        {/* </div> */}
     </div>;
 }
 

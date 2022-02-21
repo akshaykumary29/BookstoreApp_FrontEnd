@@ -3,6 +3,8 @@ import '../checkout/CheckoutOrder.scss'
 import { useHistory } from "react-router-dom";
 import background from '../../assests/background.png'
 import background2 from '../../assests/background2.png'
+import Header from "../header/Header";
+import Footer from "../footer/Footer";
 
 function CheckoutOrder() {
     const history = useHistory()
@@ -13,6 +15,7 @@ function CheckoutOrder() {
 
     return (
         <>
+            <Header />
             <div className='checkout-container'>
                 <div className='image'>
                     <img src={background} alt="Add image" />
@@ -42,7 +45,9 @@ function CheckoutOrder() {
                     <button className='shopping-button' onClick={() => navDashboard()}>Continue Shopping</button>
                 </div>
             </div>
-
+            <div>
+                <Footer />
+            </div>
         </>
     )
 }

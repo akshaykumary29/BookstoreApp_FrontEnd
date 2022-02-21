@@ -135,15 +135,15 @@ export default function Header(props) {
     }
 
     useEffect(() => {
-     console.log(props.cartLen);
-     console.log(props.wishlistLen);   
+        console.log(props.cart);
+        console.log(props.wishlist);
     }, []);
 
-    const DisplayCart= () => {
+    const DisplayCart = () => {
         history.push('/cart')
     }
 
-    const Wishlist= () => {
+    const Wishlist = () => {
         history.push('/wishlist')
     }
 
@@ -153,27 +153,27 @@ export default function Header(props) {
 
                 <img src={require("../../assests/education.png")} alt="logo" />
                 <Typography variant="h6" noWrap component="div" sx={{ color: "#fff" }} className='header-search-icons'>
-                    <div className='header-title'>Bookstore</div>
+                    <div><Link to="/home" className='header-title' sx={{ color: "#fff" }} >Bookstore</Link></div>
                 </Typography>
                 <Typography>
-                    <Search className="search" style={{ }} >
+                    <Search className="header-search" style={{}} >
                         <SearchIconWrapper>
                             <SearchIcon style={{ color: "#fff" }} />
                         </SearchIconWrapper>
-                        
-                            <StyledInputBase onChange={(searchval) => requestSearch(searchval)}
-                                placeholder="Search"
-                                value={searchText}
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
+
+                        <StyledInputBase onChange={(searchval) => requestSearch(searchval)}
+                            placeholder="Search"
+                            value={searchText}
+                            inputProps={{ 'aria-label': 'search' }}
+                        />
                     </Search>
                 </Typography>
                 <Typography>
                     <div className='header-icons' style={{ display: "flex", marginLeft: "100%" }}>
-
-                        <Typography className='header-search-icons' style={{ display: "flex", marginLeft: "30px" }}><AccountCircleOutlined style={{ color: "#fff" }} />Akshaykumar</Typography>
-                        <Typography className='header-search-icons1' style={{ display: "flex", marginLeft: "60px" }}><ShoppingCartOutlinedIcon style={{ color: "#fff" }} onClick={() => DisplayCart()} /> {props.cartLen} </Typography>
-                        <Typography className='header-search-icons1' style={{ display: "flex", marginLeft: "60px" }}><FavoriteBorderOutlinedIcon style={{ color: "#fff" }} onClick={() => Wishlist()} /> {props.wishlistLen} </Typography>
+                        {/* display: "flex", marginLeft: "30px" */}
+                        <Typography className='header-search-icons' style={{}}><AccountCircleOutlined style={{ color: "#fff" }} />Akshaykumar</Typography>
+                        <Typography className='header-search-icons1' style={{ display: "flex", marginLeft: "60px" }}><ShoppingCartOutlinedIcon style={{ color: "#fff" }} onClick={() => DisplayCart()} /> {props.cart} </Typography>
+                        <Typography className='header-search-icons1' style={{ display: "flex", marginLeft: "60px" }}><FavoriteBorderOutlinedIcon style={{ color: "#fff" }} onClick={() => Wishlist()} /> {props.wishlist} </Typography>
 
                     </div>
                 </Typography>
