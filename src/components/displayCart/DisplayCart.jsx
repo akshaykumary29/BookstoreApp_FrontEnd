@@ -21,16 +21,22 @@ function DisplayCart() {
     const service = new CartService();
     const wishservice = new WishlistService();
     const orderService = new OrderService();
+    const userservice = new UserService();
     const [cart, setCart] = useState([]);
     const [wishlist, setWishList] = useState([])
     const [ordersumm, setOrderSumm] = useState([])
     const [orderbutton, setOrderbutton] = useState(true)
     const [checkout, setCheckout] = useState(true)
     const [fields, setFields] = useState({
-        fullAddress: "",
-        city: "",
-        state: "",
-        addressType: ""
+        // fullAddress: "",
+        // city: "",
+        // state: "",
+        // addressType: ""
+
+        fullAddress: localStorage.getItem("fullAddress"),
+        city: localStorage.getItem("city"),
+        state: localStorage.getItem("state"),
+        addressType: localStorage.getItem("addressType")
     })
 
     const [continuebutton, setContinuebutton] = useState(true)
@@ -47,7 +53,7 @@ function DisplayCart() {
     useEffect(() => {
         getCart();
         getWishlist();
-        // customerDetails();
+        customerDetails();
     }, []);
 
 
@@ -80,13 +86,13 @@ function DisplayCart() {
         console.log(data);
         service.cartItemQuantity(val._id, data)
             .then(() => {
-                service.getCart()
-                    .then((res) => {
-                        console.log(res);
-                        setCart(res.data.result);
-                    }).catch((err) => {
-                        console.log(err);
-                    })
+                // service.getCart()
+                //     .then((res) => {
+                //         console.log(res);
+                //         setCart(res.data.result);
+                //     }).catch((err) => {
+                //         console.log(err);
+                //     })
                 getCart()
             }).catch((err) => {
                 console.log(err);
@@ -99,13 +105,13 @@ function DisplayCart() {
         }
         service.cartItemQuantity(val._id, data)
             .then((res) => {
-                service.getCart()
-                    .then(() => {
-                        console.log(res);
-                        setCart(res.data.result);
-                    }).catch((err) => {
-                        console.log(err);
-                    })
+                // service.getCart()
+                //     .then(() => {
+                //         console.log(res);
+                //         setCart(res.data.result);
+                //     }).catch((err) => {
+                //         console.log(err);
+                //     })
                 getCart()
             }).catch((err) => {
                 console.log(err);
@@ -116,7 +122,7 @@ function DisplayCart() {
         service.removeCart(val._id)
             .then((res) => {
                 console.log(res);
-                setCart(res.data.result)
+                // setCart(res.data.result)
                 getCart()
             }).catch((err) => {
                 console.log(err);
@@ -140,18 +146,18 @@ function DisplayCart() {
             }
             console.log(data);
             orderService.order(data)
-            .then((res) => {
-                console.log(res);
-                setOrderSumm(res.data.result)
-            }).catch((err) => {
-                console.log(err);
-            })
+                .then((res) => {
+                    console.log(res);
+                    setOrderSumm(res.data.result)
+                }).catch((err) => {
+                    console.log(err);
+                })
         })
     }
 
     const changefield = (e) => {
-        setFields(prviousvalues => {
-            return { ...prviousvalues, [e.target.name]: e.target.value }
+        setFields(fields => {
+            return { ...fields, [e.target.name]: e.target.value }
         })
     }
 
@@ -164,16 +170,20 @@ function DisplayCart() {
             "state": fields.state
         }
         console.log(data);
-        UserService.customerDetails(data)
+        userservice.customerDetails(data)
             .then((res) => {
                 console.log(res);
+                localStorage.setItem("addressType", res.data.result.address[1].addressType)
+                localStorage.setItem("fullAddress", res.data.result.address[1].fullAddress)
+                localStorage.setItem("city", res.data.result.address[1].city)
+                localStorage.setItem("state", res.data.result.address[1].state);
             }).catch((err) => {
                 console.log(err);
             })
     }
 
     const callfunctions = () => {
-        // customerDetails()
+        customerDetails()
         orderSummary()
     }
 
@@ -182,14 +192,15 @@ function DisplayCart() {
     }
 
     return <div>
-        <Header cart={cart.length} wishlist={wishlist.length} />
-        
+        <Header cart={cart ? cart.length : 0} wishlist={wishlist ? wishlist.length : 0} />
+        {/* wishlist ? wishItem.length : 0 */}
+
         <div className='maincart-container'>
             <h3 className='heading'>Home/ My cart</h3>
             <div className='cart-container'>
-                <h3 className='my-cart'>My Cart({cart.length})</h3>
+                <h3 className='my-cart'>My Cart({cart ? cart.length : 0})</h3>
                 {
-                    cart.map((cart) => {
+                    cart ? cart.map((cart) => {
                         return <div >
                             <div className='content-container'>
                                 <div className='image-cart'><img src={dontmake} alt="image" style={{ height: "105px" }, { width: "100 px" }} /></div>
@@ -206,7 +217,7 @@ function DisplayCart() {
                                 <div className='remove' onClick={() => removeCart(cart)}>Remove</div>
                             </div>
                         </div>
-                    })
+                    }) : ''
                 }
                 {
                     orderbutton ? <button className='button-order' onClick={() => { changebutton() }}  >Place order</button>
@@ -223,7 +234,7 @@ function DisplayCart() {
 
                             <div className='text-fields'>
                                 <div className='name-field'>
-                                    <TextField size="medium" name="fullname" id="outlined-basic" label="Full Name" variant="outlined" style={{ width: "250px" }} onChange={(e) => changefield(e)} />
+                                    <TextField required size="medium" name="fullname" id="outlined-basic" label="Full Name" variant="outlined" style={{ width: "250px" }} onChange={(e) => changefield(e)} />
                                 </div>
                                 <div className='mobile-num'>
                                     <TextField name="mobilenumber" id="outlined-basic" label="Mobile Number" variant="outlined" style={{ width: "250px" }} onChange={(e) => changefield(e)} />
@@ -238,11 +249,11 @@ function DisplayCart() {
                                 </div>
                             </div>
                             <div className='Address'>
-                                <TextField name="address" id="outlined-basic" label="Address" variant="outlined" style={{ width: "532px" }} multiline="true" rows="4" onChange={(e) => { changefield(e) }} />
+                                <TextField required name="fullAddress" id="outlined-basic" label="fullAddress" variant="outlined" style={{ width: "532px" }} multiline="true" rows="4" onChange={(e) => { changefield(e) }} value={fields.fullAddress} />
                             </div>
                             <div className='text-fields'>
                                 <div className='name-field'>
-                                    <TextField name="city" size="medium" id="outlined-basic" label="City/town" variant="outlined" style={{ width: "250px" }} onChange={(e) => { changefield(e) }} />
+                                    <TextField required name="city" size="medium" id="outlined-basic" label="City/town" variant="outlined" style={{ width: "250px" }} onChange={(e) => { changefield(e) }} value={fields.city} />
                                 </div>
                                 <div className='mobile-num'>
                                     <TextField name="landmark" id="outlined-basic" label="Landmark" variant="outlined" style={{ width: "250px" }} onChange={(e) => { changefield(e) }} />
@@ -260,9 +271,9 @@ function DisplayCart() {
                                     // name="addressType"
                                     >
 
-                                        <FormControlLabel name="addressType" value="Home" control={<Radio />} label="Home" onClick={(e) => { changefield(e) }} />
-                                        <FormControlLabel name="addressType" value="Work" control={<Radio />} label="Work" onClick={(e) => { changefield(e) }} />
-                                        <FormControlLabel name="addressType" value="other" control={<Radio />} label="Other" onClick={(e) => { changefield(e) }} />
+                                        <FormControlLabel required name="addressType" value="Home" control={<Radio />} label="Home" onClick={(e) => { changefield(e) }} />
+                                        <FormControlLabel required name="addressType" value="Work" control={<Radio />} label="Work" onClick={(e) => { changefield(e) }} />
+                                        <FormControlLabel required name="addressType" value="other" control={<Radio />} label="Other" onClick={(e) => { changefield(e) }} />
 
                                     </RadioGroup>
                                 </FormControl>
@@ -289,7 +300,7 @@ function DisplayCart() {
                     <div className='order-details'>
                         <div className='inside-orderdetails'>Order Summary</div>
                         {
-                            cart.map((cart) => {
+                            cart ? cart.map((cart) => {
                                 return <div >
                                     <div className='content-containers'>
                                         <div className='image-carts'><img src={dontmake} alt="image" style={{ height: "105px" }, { width: "100 px" }} /></div>
@@ -302,7 +313,7 @@ function DisplayCart() {
                                     </div>
 
                                 </div>
-                            })
+                            }) : ''
 
                         }
                         <button className='checkout-button' onClick={() => checkoutorder()}>checkout</button>
@@ -311,7 +322,7 @@ function DisplayCart() {
 
         </div>
 
-        {/* <div > */}
+        {/* <div> */}
             <Footer />
         {/* </div> */}
     </div>;

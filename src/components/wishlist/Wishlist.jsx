@@ -18,19 +18,19 @@ function Wishlist() {
     const [wishlist, setWishList] = useState([]);
 
     useEffect(() => {
-        getCart();
+        // getCart();
         getWishlist();
     }, []);
 
-    const getCart = () => {
-        cartservice.getCart()
-            .then((res) => {
-                console.log(res);
-                setCart(res.data.result);
-            }).catch((err) => {
-                console.log(err);
-            })
-    }
+    // const getCart = () => {
+    //     cartservice.getCart()
+    //         .then((res) => {
+    //             console.log(res);
+    //             setCart(res.data.result);
+    //         }).catch((err) => {
+    //             console.log(err);
+    //         })
+    // }
 
     const getWishlist = () => {
         service.getWishlists()
@@ -58,7 +58,7 @@ function Wishlist() {
         service.removeWishlish(val.product_id._id)
             .then((res) => {
                 console.log(res);
-                setWishList(res.data.result)
+                // setWishList(res.data.result)
                 getWishlist()
             }).catch((err) => {
                 console.log(err);
@@ -85,7 +85,7 @@ function Wishlist() {
                         <span>My WishList</span>
                     </div>
                     <div className='wishlisthead' style={{ marginTop: 15 }}>
-                        My WishList ( {wishlist.length} )
+                        My WishList ( {wishlist ? wishlist.length : 0} )
                     </div>
                     <div className='display'>
                         {
