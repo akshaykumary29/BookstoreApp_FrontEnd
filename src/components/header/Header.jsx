@@ -13,6 +13,8 @@ import { Link, useHistory } from 'react-router-dom';
 import '../header/Header.scss'
 import DisplayCart from '../displayCart/DisplayCart';
 import Wishlist from '../wishlist/Wishlist';
+import Badge from '@mui/material/Badge';
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -135,8 +137,8 @@ export default function Header(props) {
     }
 
     useEffect(() => {
-        console.log(props.cart);
-        console.log(props.wishlist);
+        // console.log(props.cart);
+        // console.log(props.wishlist);
     }, []);
 
     const DisplayCart = () => {
@@ -171,9 +173,21 @@ export default function Header(props) {
                 <Typography>
                     <div className='header-icons' style={{ display: "flex", marginLeft: "100%" }}>
                         {/* display: "flex", marginLeft: "30px" */}
-                        <Typography className='header-search-icons' style={{}}><AccountCircleOutlined style={{ color: "#fff" }} />Akshaykumar</Typography>
-                        <Typography className='header-search-icons1' style={{ display: "flex", marginLeft: "60px" }}><ShoppingCartOutlinedIcon style={{ color: "#fff" }} onClick={() => DisplayCart()} /> {props.cart} </Typography>
-                        <Typography className='header-search-icons1' style={{ display: "flex", marginLeft: "60px" }}><FavoriteBorderOutlinedIcon style={{ color: "#fff" }} onClick={() => Wishlist()} /> {props.wishlist} </Typography>
+                        <Typography className='header-search-icons' style={{}}>
+                            <AccountCircleOutlined style={{ color: "#fff" }} />Akshaykumar
+                        </Typography>
+                        {/* style={{ display: "flex", marginLeft: "60px" }} */}
+                        <Typography className='header-search-icons1' > cart
+                            <Badge badgeContent={props.cart} color="primary">
+                                <ShoppingCartOutlinedIcon style={{ color: "#fff" }} color="action" onClick={() => DisplayCart()} />
+                            </Badge>
+                        </Typography>
+                        {/* style={{ display: "flex", marginLeft: "60px" }} */}
+                        <Typography className='header-search-icons1'> wishlist
+                            <Badge badgeContent={props.wishlist} color="primary">
+                                <FavoriteBorderOutlinedIcon style={{ color: "#fff" }} color="action" onClick={() => Wishlist()} />
+                            </Badge>
+                        </Typography>
 
                     </div>
                 </Typography>

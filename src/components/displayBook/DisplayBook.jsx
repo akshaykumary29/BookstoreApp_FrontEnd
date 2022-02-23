@@ -58,7 +58,7 @@ function DisplayBook(props) {
                 console.log(err);
             })
     }
-    
+
     const addBookToCart = (book) => {
         // setOpen(true);
         service.addToCart(book._id)
