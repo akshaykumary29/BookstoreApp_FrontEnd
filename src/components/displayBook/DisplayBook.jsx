@@ -8,7 +8,6 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
 import usePagination from "../pagination/Pagination";
 
 
@@ -18,6 +17,7 @@ function DisplayBook(props) {
     const [cart, setCart] = useState([]);
     const [wishlist, setWishlist] = useState([]);
 
+    // Pagination
     let [page, setPage] = useState([]);
     const PER_PAGE = 8;
 
@@ -28,6 +28,26 @@ function DisplayBook(props) {
         setPage(p);
         _DATA.jump(p);
     };
+    // --------------------------------------------------------------
+
+   
+
+    React.useEffect(() => {
+        // getAllBooks();
+        props.getCart();
+        props.getWishlist();
+        searchBook();
+    }, [props.searchText])
+
+    // search book
+    const searchBook = () => {
+        if(props.searchText!=''){
+            let filteredBook = books.filter(x => x.bookName.toLowerCase().includes(props.searchText));
+            setBooks(filteredBook);
+        }else{
+            getAllBooks();
+        }
+    }
 
     const getAllBooks = () => {
         service.getBooks()
@@ -38,13 +58,7 @@ function DisplayBook(props) {
                 console.log(err);
             })
     }
-
-    React.useEffect(() => {
-        getAllBooks();
-        props.getCart();
-        props.getWishlist();
-    }, [])
-
+    
     const addBookToCart = (book) => {
         // setOpen(true);
         service.addToCart(book._id)
@@ -103,6 +117,7 @@ function DisplayBook(props) {
         return btn;
     }
 
+    // for snackbar
     const [open, setOpen] = useState(false);
     const [msg, setMsg] = useState('');
 
@@ -142,6 +157,7 @@ function DisplayBook(props) {
             </select>
             <div className="displayCard" >
                 {
+                    // books.map((book, index) => (
                     _DATA.currentData().map((book, index) => (
                         <div className="card" key={book._id} >
                             <div className="imageCard" >
@@ -152,15 +168,14 @@ function DisplayBook(props) {
                                 <p id="author" >Author: {book.author} </p>
                                 <p id="price" >Rs.- {book.price} </p>
                             </div>
-                            {/* <div className="btnContainer" > */}
-                                {getbutton(book)}
-                                {/* <Button variant="contained" onClick={() => addBookToCart(item)} >ADD TO BAG</Button>
-                                <Button variant="outlined" className="wishlist" onClick={() => addBookToWishList(item)} > WISHLIST </Button> */}
-                            {/* </div> */}
+
+                            {getbutton(book)}
+
                         </div>
                     ))
                 }
             </div>
+
             <Snackbar
                 open={open}
                 autoHideDuration={6000}
@@ -168,17 +183,16 @@ function DisplayBook(props) {
                 message={msg}
                 action={action}
             />
-            
+
             <div className='pagination'>
                 <Pagination
-                count={count}
-                size="large"
-                page={page}
-                variant="outlined"
-                shape="rounded"
-                onChange={handleChange}
+                    count={count}
+                    size="large"
+                    page={page}
+                    variant="outlined"
+                    shape="rounded"
+                    onChange={handleChange}
                 />
-
 
                 {/* <Stack spacing={2}>
                     <Pagination count={10} />

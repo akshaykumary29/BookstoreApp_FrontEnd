@@ -10,6 +10,11 @@ function Home(props) {
     const wishlistservice = new WishlistService();
     const [cart, setCart] = useState([]);
     const [wishlist, setWishList] = useState([]);
+    const [x, setX] = useState('');
+
+    const abc = (val) => {
+        setX(val)
+    }
 
     useEffect(() => {
         getCart();
@@ -38,8 +43,8 @@ function Home(props) {
           })
     }
     return <div>
-        <Header cart={cart.length} wishlist={wishlist.length} getCart={getCart} getWishlist={getWishlist} />
-        <DisplayBook cart={cart} wishlist={wishlist} getCart={getCart} getWishlist={getWishlist} />
+        <Header abc={abc} cart={cart.length} wishlist={wishlist.length} getCart={getCart} getWishlist={getWishlist} />
+        <DisplayBook searchText={x} cart={cart} wishlist={wishlist} getCart={getCart} getWishlist={getWishlist} />
         <Footer />
     </div>;
 }

@@ -131,7 +131,7 @@ export default function Header(props) {
     const requestSearch = (searchval) => {
         console.log(searchval.target.value)
         setSearchText(searchval.target.value);
-        // props.abc(searchval.target.value);
+        props.abc(searchval.target.value);
     }
 
     useEffect(() => {

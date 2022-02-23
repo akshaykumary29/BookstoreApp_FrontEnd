@@ -188,6 +188,12 @@ function DisplayCart() {
     }
 
     const checkoutorder = () => {
+        service.removeCart()
+            .then(() => {
+                getCart()
+            }).catch(() => {
+
+            })
         history.push('/checkout')
     }
 
@@ -303,7 +309,8 @@ function DisplayCart() {
                             cart ? cart.map((cart) => {
                                 return <div >
                                     <div className='content-containers'>
-                                        <div className='image-carts'><img src={dontmake} alt="image" style={{ height: "105px" }, { width: "100 px" }} /></div>
+                                        <div className='image-carts'>
+                                            <img src={dontmake} alt="image" style={{ height: "105px" , width: "100 px" }} /></div>
                                         <div className='cart-descriptions'>
                                             <div className='book-nams'>{cart.product_id.bookName}</div>
                                             <div className='author-nams'>{cart.product_id.author}</div>
@@ -323,7 +330,7 @@ function DisplayCart() {
         </div>
 
         {/* <div> */}
-            <Footer />
+        <Footer />
         {/* </div> */}
     </div>;
 }
