@@ -5,7 +5,7 @@ import Footer from "../../components/footer/Footer";
 import CartService from "../../services/CartService";
 import WishlistService from "../../services/WishlistService";
 
-function Home(props) {
+function Home() {
     const cartservice = new CartService();
     const wishlistservice = new WishlistService();
     const [cart, setCart] = useState([]);
@@ -23,24 +23,21 @@ function Home(props) {
 
     const getCart = () => {
         cartservice.getCart()
-        .then((res) => {
-            console.log(res);
-            setCart(res.data.result);
-        }).catch((err) => {
-            console.log(err);
-        })
+            .then((res) => {
+                setCart(res.data.result);
+            }).catch((err) => {
+                console.log(err);
+            })
     }
 
     const getWishlist = () => {
         wishlistservice.getWishlists()
-        .then((res) =>{
-            console.log(res)
-            setWishList(res.data.result);
-        
-          })
-          .catch(err=>{
-            console.log(err)
-          })
+            .then((res) => {
+                setWishList(res.data.result);
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
     return <div>
         <Header abc={abc} cart={cart.length} wishlist={wishlist.length} getCart={getCart} getWishlist={getWishlist} />

@@ -5,7 +5,6 @@ import Header from "../header/Header";
 
 import Footer from "../footer/Footer";
 import CartService from "../../services/CartService";
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import dontmake from "../../assests/dontmake.png"
 import '../wishlist/Wishlist.scss'
@@ -67,16 +66,16 @@ function Wishlist() {
 
     return (
         <div>
-            <Header wishlist={wishlist ? wishlist.length : 0} cart={cart ? cart.length : 0} />
+            <Header cart={cart ? cart.length : 0} wishlist={wishlist ? wishlist.length : 0} />
 
             <div className='wishListMain'>
                 <div className='wishListInner'>
-                    <div className='header' style={{ paddingRight: "900px", marginTop: 80 }}>
-                        {/* onClick={home} */}
+                    <div className='header' style={{ paddingRight: "800px", marginTop: 80 }}>
+
                         <span
                             style={{
                                 color: '#9D9D9D',
-                                marginRight: '5px',
+                                marginRight: '4px',
                                 cursor: 'pointer',
                             }}
                         >
@@ -94,7 +93,7 @@ function Wishlist() {
                                     <div className='imgAndInfo'>
                                         <div className='bookImgCont'>
                                             <div className='bookImg'>
-                                                <img className='theImage' src={dontmake}></img>
+                                                <img className='theImage' src={dontmake} alt="book image"></img>
                                             </div>
                                         </div>
                                         <div className='bookInfo'>
@@ -119,9 +118,7 @@ function Wishlist() {
                                             className='deleteButton'
                                             onClick={() => deleteFromWishlist(item)}
                                         >
-                                            <DeleteOutlinedIcon
-                                            // style={{ width: '100%', height: '100%' }}
-                                            />
+                                            <DeleteOutlinedIcon />
                                         </div>
                                     </div>
                                 </div>

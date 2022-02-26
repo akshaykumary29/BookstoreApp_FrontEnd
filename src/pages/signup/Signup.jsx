@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '../signup/Signup.scss'
 import { Button, TextField } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import UserService from "../../services/UserService";
 
 function Signup() {
@@ -26,7 +26,6 @@ function Signup() {
     }
 
     const validation = () => {
-        // let isError = false;
         const nameError = inputField.fullName === '' ? true : false;
         const mailError = inputField.email === '' ? true : false;
         const passError = inputField.password === '' ? true : false;
@@ -71,9 +70,7 @@ function Signup() {
                 variant='outlined'
                 name="fullName"
                 onChange={(e) => { changeHandle(e) }}
-                // value={inputField.fullName}
                 error={inputField.fullNameError}
-            // helpertext={error.fullNameError ? "fullname is required" : " "} 
             >
 
             </TextField>
@@ -86,9 +83,7 @@ function Signup() {
                 label="EmaiId"
                 variant='outlined'
                 onChange={(e) => { changeHandle(e) }}
-                // value={inputField.email}
                 error={inputField.emailError}
-            // helpertext={error.emailError ? "email required" : " "} 
             >
 
             </TextField>
@@ -101,9 +96,7 @@ function Signup() {
                 name="password"
                 variant='outlined'
                 onChange={(e) => { changeHandle(e) }}
-                // value={inputField.password}
                 error={inputField.passwordError}
-            // helpertext={error.passwordError ? "password required" : " "} 
             >
 
             </TextField>
@@ -116,9 +109,7 @@ function Signup() {
                 name="number"
                 variant='outlined'
                 onChange={(e) => { changeHandle(e) }}
-                // value={inputField.number}
                 error={inputField.numberError}
-            // helpertext={error.numberError ? "phonenumber required" : " "} 
             >
 
             </TextField>
@@ -127,6 +118,5 @@ function Signup() {
         </div>
     </div>;
 }
-
 
 export default Signup;

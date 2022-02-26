@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '../login/Login.scss'
 import { Button, TextField } from '@material-ui/core';
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import UserService from '../../services/UserService';
 
 function Login() {
@@ -17,8 +17,6 @@ function Login() {
 
     const inputsHandler = (e) => {
         setInputField({
-            // return { [e.target.name]: e.target.value }
-            // console.log(e.target.value);
             ...inputField, [e.target.name]: e.target.value
         })
     }
@@ -55,7 +53,6 @@ function Login() {
     }
 
 
-
     return (
         <div className="login">
 
@@ -66,9 +63,7 @@ function Login() {
                 type="text"
                 label="Email Id"
                 variant="outlined"
-                // onChange={inputsHandler}
                 onChange={(e) => inputsHandler(e)}
-                // value={inputField.email}
                 error={inputField.emailError}
             >
 
@@ -81,9 +76,7 @@ function Login() {
                 label="Password"
                 type="password"
                 variant="outlined"
-                // onChange={inputsHandler}
                 onChange={(e) => inputsHandler(e)}
-                // value={inputField.password}
                 error={inputField.passError}
             >
 
@@ -100,4 +93,5 @@ function Login() {
         </div>
     );
 }
+
 export default Login;

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import '../displayCart/DisplayCart.scss'
-
 import Header from "../header/Header";
-import { Button } from "@material-ui/core";
-import { Box } from "@mui/material";
 import CartService from "../../services/CartService";
 import WishlistService from "../../services/WishlistService";
 import OrderService from "../../services/OrderService";
@@ -24,25 +21,26 @@ function DisplayCart() {
     const userservice = new UserService();
     const [cart, setCart] = useState([]);
     const [wishlist, setWishList] = useState([])
-    const [ordersumm, setOrderSumm] = useState([])
+    // const [ordersumm, setOrderSumm] = useState([])
     const [orderbutton, setOrderbutton] = useState(true)
     const [checkout, setCheckout] = useState(true)
     const [fields, setFields] = useState({
-        // fullAddress: "",
-        // city: "",
-        // state: "",
-        // addressType: ""
+        fullAddress: "",
+        city: "",
+        state: "",
+        addressType: ""
 
-        fullAddress: localStorage.getItem("fullAddress"),
-        city: localStorage.getItem("city"),
-        state: localStorage.getItem("state"),
-        addressType: localStorage.getItem("addressType")
+        // fullAddress: localStorage.getItem("fullAddress"),
+        // city: localStorage.getItem("city"),
+        // state: localStorage.getItem("state"),
+        // addressType: localStorage.getItem("addressType")
     })
 
     const [continuebutton, setContinuebutton] = useState(true)
 
     const changebutton = () => {
         setOrderbutton(false)
+        placeOrder();
     }
 
     const orderSummary = () => {
@@ -86,13 +84,6 @@ function DisplayCart() {
         console.log(data);
         service.cartItemQuantity(val._id, data)
             .then(() => {
-                // service.getCart()
-                //     .then((res) => {
-                //         console.log(res);
-                //         setCart(res.data.result);
-                //     }).catch((err) => {
-                //         console.log(err);
-                //     })
                 getCart()
             }).catch((err) => {
                 console.log(err);
@@ -105,13 +96,6 @@ function DisplayCart() {
         }
         service.cartItemQuantity(val._id, data)
             .then((res) => {
-                // service.getCart()
-                //     .then(() => {
-                //         console.log(res);
-                //         setCart(res.data.result);
-                //     }).catch((err) => {
-                //         console.log(err);
-                //     })
                 getCart()
             }).catch((err) => {
                 console.log(err);
@@ -148,7 +132,7 @@ function DisplayCart() {
             orderService.order(data)
                 .then((res) => {
                     console.log(res);
-                    setOrderSumm(res.data.result)
+                    // setOrderSumm(res.data.result)
                 }).catch((err) => {
                     console.log(err);
                 })
@@ -188,12 +172,12 @@ function DisplayCart() {
     }
 
     const checkoutorder = () => {
-        service.removeCart()
-            .then(() => {
-                getCart()
-            }).catch(() => {
+        // service.removeCart()
+        //     .then(() => {
+        //         getCart()
+        //     }).catch(() => {
 
-            })
+        //     })
         history.push('/checkout')
     }
 
@@ -226,7 +210,7 @@ function DisplayCart() {
                     }) : ''
                 }
                 {
-                    orderbutton ? <button className='button-order' onClick={() => { changebutton() }}  >Place order</button>
+                    orderbutton ? <button className='button-order' onClick={() => changebutton()} >Place order</button>
                         : ""
                 }
             </div>
@@ -274,7 +258,6 @@ function DisplayCart() {
                                         row
                                         aria-labelledby="demo-row-radio-buttons-group-label"
                                         style={{ marginTop: "5%", marginLeft: "-85%" }}
-                                    // name="addressType"
                                     >
 
                                         <FormControlLabel required name="addressType" value="Home" control={<Radio />} label="Home" onClick={(e) => { changefield(e) }} />
@@ -310,7 +293,7 @@ function DisplayCart() {
                                 return <div >
                                     <div className='content-containers'>
                                         <div className='image-carts'>
-                                            <img src={dontmake} alt="image" style={{ height: "105px" , width: "100 px" }} /></div>
+                                            <img src={dontmake} alt="image" style={{ height: "105px", width: "100 px" }} /></div>
                                         <div className='cart-descriptions'>
                                             <div className='book-nams'>{cart.product_id.bookName}</div>
                                             <div className='author-nams'>{cart.product_id.author}</div>
@@ -329,9 +312,9 @@ function DisplayCart() {
 
         </div>
 
-        {/* <div> */}
-        <Footer />
-        {/* </div> */}
+        <div>
+            <Footer />
+        </div>
     </div>;
 }
 

@@ -4,7 +4,7 @@ let baseUrl = "https://bookstore.incubation.bridgelabz.com/bookstore_user/";
 
 let headerConfig = {
     headers: {
-        'x-access-token' : localStorage.getItem("token")
+        'x-access-token': localStorage.getItem("token")
     }
 }
 
@@ -18,7 +18,7 @@ class UserService {
     login(data) {
         return axios.postmethod(`${baseUrl}login`, data)
     }
-    
+
     customerDetails(data) {
         return axios.putmethod(`${baseUrl}edit_user`, data, headerConfig)
     }

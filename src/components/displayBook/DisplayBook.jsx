@@ -16,9 +16,11 @@ function DisplayBook(props) {
     const [books, setBooks] = useState([]);
     const [cart, setCart] = useState([]);
     const [wishlist, setWishlist] = useState([]);
+    const [sortBy, setSortBy] = useState("")
+
 
     // Pagination
-    let [page, setPage] = useState([]);
+    let [page, setPage] = useState(0);
     const PER_PAGE = 8;
 
     const count = Math.ceil(books.length / PER_PAGE);
@@ -28,31 +30,16 @@ function DisplayBook(props) {
         setPage(p);
         _DATA.jump(p);
     };
-    // --------------------------------------------------------------
-
-   
 
     React.useEffect(() => {
-        // getAllBooks();
+        getAllBooks();
         props.getCart();
         props.getWishlist();
-        searchBook();
     }, [props.searchText])
-
-    // search book
-    const searchBook = () => {
-        if(props.searchText!=''){
-            let filteredBook = books.filter(x => x.bookName.toLowerCase().includes(props.searchText));
-            setBooks(filteredBook);
-        }else{
-            getAllBooks();
-        }
-    }
 
     const getAllBooks = () => {
         service.getBooks()
             .then((res) => {
-                console.log(res);
                 setBooks(res.data.result);
             }).catch((err) => {
                 console.log(err);
@@ -95,7 +82,6 @@ function DisplayBook(props) {
         let btn = '';
         let cartItem = (props.cart).find((data) => data.product_id.bookName === item.bookName);
         let wishItem = (props.wishlist).find((data) => data.product_id.bookName === item.bookName);
-        console.log(cartItem);
         if (cartItem) {
             btn = <Button variant="outlined" className="addedBtn">ADDED TO BAG</Button>
         }
@@ -112,9 +98,45 @@ function DisplayBook(props) {
                     <Button variant="outlined" className="wishlist-btn" onClick={() => addBookToWishList(item)} >WISHLIST</Button>
                 </div>
             </div>
-
         }
         return btn;
+    }
+
+    //sort the books
+    const handleSorting = (e) => {
+        console.log(e.target.value);
+        let val = e.target.value;
+        switch (val) {
+            case "hightolow":
+                highToLow();
+                break;
+            case "lowtohigh":
+                lowToHigh();
+                break;
+            case "newarrival":
+                aToz();
+                break;
+            default:
+                console.log("Invalid");
+        }
+    }
+
+    const highToLow = () => {
+        let htol = books.sort((a, b) => a.price - b.price).reverse();
+        console.log(htol);
+        setSortBy(htol);
+    }
+
+    const lowToHigh = () => {
+        let ltoh = books.sort((a, b) => a.price - b.price);
+        console.log(ltoh);
+        setSortBy(ltoh);
+    }
+
+    const aToz = () => {
+        let atoz = books.sort((a, b) => a.bookName.localeCompare(b.bookName));
+        console.log(atoz);
+        setSortBy(atoz);
     }
 
     // for snackbar
@@ -130,7 +152,7 @@ function DisplayBook(props) {
     };
 
     const action = (
-        <React.Fragment>
+        <>
             <Button color="secondary" size="small" onClick={handleClose}>
                 UNDO
             </Button>
@@ -142,23 +164,24 @@ function DisplayBook(props) {
             >
                 <CloseIcon fontSize="small" />
             </IconButton>
-        </React.Fragment>
+        </>
     );
 
+
     return <div>
-        <Box className="bookContain" component="main" sx={{ flexGrow: 1.5, p: 8 }} >
+        <Box className="bookContain" component="main" sx={{ flexGrow: 1, p: 8 }} >
             <p className="books" >Books</p>
             <p className="book-len">({books.length})</p>
-            <select className='select-menu'>
-                <option name="">Sort by relevance</option>
-                <option name="hightolow">Price:High to Low</option>
-                <option name="lowtohigh">Price:Low to High</option>
-                <option name="newarrival">Nweest Arrivals</option>
+            <select className='select-menu' name="sortBy" value="sortBy" onChange={handleSorting}>
+                <option value="">Sort by relevance</option>
+                <option value="hightolow">Price:High to Low</option>
+                <option value="lowtohigh">Price:Low to High</option>
+                <option value="newarrival">Newest Arrivals</option>
             </select>
             <div className="displayCard" >
                 {
                     // books.map((book, index) => (
-                    _DATA.currentData().map((book, index) => (
+                    _DATA.currentData().filter(x => x.bookName.toLowerCase().includes(props.searchText)).map((book, index) => (
                         <div className="card" key={book._id} >
                             <div className="imageCard" >
                                 <img src={dontmake} alt="book image" />
@@ -193,10 +216,6 @@ function DisplayBook(props) {
                     shape="rounded"
                     onChange={handleChange}
                 />
-
-                {/* <Stack spacing={2}>
-                    <Pagination count={10} />
-                </Stack> */}
             </div>
         </Box>
     </div>;

@@ -4,7 +4,7 @@ let baseUrl = "https://bookstore.incubation.bridgelabz.com/bookstore_user/";
 
 let headerConfig = {
     headers: {
-        'x-access-token' : localStorage.getItem("token")
+        'x-access-token': localStorage.getItem("token")
     }
 }
 const axios = new AxiosService();
