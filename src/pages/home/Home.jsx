@@ -12,7 +12,7 @@ function Home() {
     const [wishlist, setWishList] = useState([]);
     const [x, setX] = useState('');
 
-    const abc = (val) => {
+    const search = (val) => {
         setX(val)
     }
 
@@ -39,8 +39,8 @@ function Home() {
                 console.log(err)
             })
     }
-    return <div>
-        <Header abc={abc} cart={cart.length} wishlist={wishlist.length} getCart={getCart} getWishlist={getWishlist} />
+    return <div className="home">
+        <Header search={search} cart={cart.length} wishlist={wishlist.length} getCart={getCart} getWishlist={getWishlist} />
         <DisplayBook searchText={x} cart={cart} wishlist={wishlist} getCart={getCart} getWishlist={getWishlist} />
         <Footer />
     </div>;

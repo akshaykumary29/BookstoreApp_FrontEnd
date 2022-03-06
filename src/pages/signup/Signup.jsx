@@ -22,7 +22,6 @@ function Signup() {
 
     const changeHandle = (e) => {
         setInputField({ ...inputField, [e.target.name]: e.target.value })
-        console.log(e.target.value);
     }
 
     const validation = () => {
@@ -41,7 +40,6 @@ function Signup() {
     const next = () => {
         let validated = validation();
         if (!validated) {
-            console.log("validated");
 
             let data = {
                 "fullName": inputField.fullName,

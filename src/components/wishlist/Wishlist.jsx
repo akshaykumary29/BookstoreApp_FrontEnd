@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import BookService from "../../services/BookService";
 import WishlistService from "../../services/WishlistService";
 import Header from "../header/Header";
-
 import Footer from "../footer/Footer";
 import CartService from "../../services/CartService";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import dontmake from "../../assests/dontmake.png"
 import '../wishlist/Wishlist.scss'
 
@@ -17,20 +17,18 @@ function Wishlist() {
     const [wishlist, setWishList] = useState([]);
 
     useEffect(() => {
-        // getCart();
+        getCart();
         getWishlist();
     }, []);
 
-    // const getCart = () => {
-    //     cartservice.getCart()
-    //         .then((res) => {
-    //             console.log(res);
-    //             setCart(res.data.result);
-    //         }).catch((err) => {
-    //             console.log(err);
-    //         })
-    // }
-
+    const getCart = () => {
+        cartservice.getCart()
+            .then((res) => {
+                setCart(res.data.result);
+            }).catch((err) => {
+                console.log(err);
+            })
+    }
     const getWishlist = () => {
         service.getWishlists()
             .then((res) => {
@@ -41,44 +39,36 @@ function Wishlist() {
             })
     }
 
-    // const addToCart = (e, val) => {
-    //     console.log(val);
-    //     bookService.addToCart(val.product_id._id)
-    //         .then((res) => {
-    //             console.log(res);
-    //             setCart(res.data.result)
-    //             getCart();
-    //         }).catch((err) => {
-    //             console.log(err);
-    //         })
-    // }
-
     const deleteFromWishlist = (val) => {
         service.removeWishlish(val.product_id._id)
             .then((res) => {
                 console.log(res);
-                // setWishList(res.data.result)
                 getWishlist()
             }).catch((err) => {
                 console.log(err);
             })
     }
 
+    const addToCart = (val) => {
+        bookService.addToCart(val.product_id._id)
+            .then((res) => {
+                console.log(res);
+                getCart();
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
     return (
-        <div>
+        <>
             <Header cart={cart ? cart.length : 0} wishlist={wishlist ? wishlist.length : 0} />
 
             <div className='wishListMain'>
                 <div className='wishListInner'>
-                    <div className='header' style={{ paddingRight: "800px", marginTop: 80 }}>
+                    <div className='header' style={{ paddingRight: "540px", marginTop: 80 }}>
 
-                        <span
-                            style={{
-                                color: '#9D9D9D',
-                                marginRight: '4px',
-                                cursor: 'pointer',
-                            }}
-                        >
+                        <span className="home-heading">
                             Home /
                         </span>
                         <span>My WishList</span>
@@ -115,6 +105,12 @@ function Wishlist() {
                                     </div>
                                     <div className='buttonBox'>
                                         <div
+                                            className="cartButton"
+                                            onClick={() => addToCart(item)}
+                                        >
+                                            <ShoppingCartOutlinedIcon />
+                                        </div>
+                                        <div
                                             className='deleteButton'
                                             onClick={() => deleteFromWishlist(item)}
                                         >
@@ -128,8 +124,9 @@ function Wishlist() {
                 </div>
             </div>
             <br />
+
             <Footer />
-        </div>
+        </>
     )
 }
 

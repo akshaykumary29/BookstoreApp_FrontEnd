@@ -11,6 +11,8 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import { Radio, TextField, RadioGroup, FormControl, FormLabel, FormControlLabel } from "@mui/material";
 import UserService from "../../services/UserService";
 import { useHistory } from "react-router-dom";
+import { carts } from '../../redux/actions/bookAction'
+import { useDispatch, useSelector } from "react-redux";
 
 
 function DisplayCart() {
@@ -25,18 +27,21 @@ function DisplayCart() {
     const [orderbutton, setOrderbutton] = useState(true)
     const [checkout, setCheckout] = useState(true)
     const [fields, setFields] = useState({
-        fullAddress: "",
-        city: "",
-        state: "",
-        addressType: ""
+        // fullAddress: "",
+        // city: "",
+        // state: "",
+        // addressType: ""
 
-        // fullAddress: localStorage.getItem("fullAddress"),
-        // city: localStorage.getItem("city"),
-        // state: localStorage.getItem("state"),
-        // addressType: localStorage.getItem("addressType")
+        fullAddress: localStorage.getItem("fullAddress"),
+        city: localStorage.getItem("city"),
+        state: localStorage.getItem("state"),
+        addressType: localStorage.getItem("addressType")
     })
 
     const [continuebutton, setContinuebutton] = useState(true)
+
+    const dispatch = useDispatch()
+    const cartData = useSelector(state => state.getCartItem)
 
     const changebutton = () => {
         setOrderbutton(false)
@@ -46,6 +51,11 @@ function DisplayCart() {
     const orderSummary = () => {
         setContinuebutton(false)
         setCheckout(false)
+    }
+
+    const callContinue = () => {
+        customerDetails()
+        orderSummary()
     }
 
     useEffect(() => {
@@ -59,7 +69,8 @@ function DisplayCart() {
         service.getCart()
             .then((res) => {
                 console.log(res);
-                setCart(res.data.result);
+                // setCart(res.data.result);
+                dispatch(carts(res.data.result))
             }).catch((err) => {
                 console.log(err);
             })
@@ -76,12 +87,9 @@ function DisplayCart() {
     }
 
     const increament = (val) => {
-        console.log("cartid", val._id);
-        console.log("quantity", val.quantityToBuy);
         let data = {
             "quantityToBuy": val.quantityToBuy + 1
         }
-        console.log(data);
         service.cartItemQuantity(val._id, data)
             .then(() => {
                 getCart()
@@ -106,7 +114,6 @@ function DisplayCart() {
         service.removeCart(val._id)
             .then((res) => {
                 console.log(res);
-                // setCart(res.data.result)
                 getCart()
             }).catch((err) => {
                 console.log(err);
@@ -114,10 +121,8 @@ function DisplayCart() {
     }
 
     const placeOrder = (val) => {
-        console.log(val);
         let data;
         val.map((order) => {
-            console.log(order);
             data = {
                 "order": [
                     {
@@ -128,7 +133,6 @@ function DisplayCart() {
                     }
                 ]
             }
-            console.log(data);
             orderService.order(data)
                 .then((res) => {
                     console.log(res);
@@ -146,14 +150,12 @@ function DisplayCart() {
     }
 
     const customerDetails = () => {
-        console.log(fields.addressType);
         let data = {
             "addressType": fields.addressType,
             "fullAddress": fields.fullAddress,
             "city": fields.city,
             "state": fields.state
         }
-        console.log(data);
         userservice.customerDetails(data)
             .then((res) => {
                 console.log(res);
@@ -166,53 +168,46 @@ function DisplayCart() {
             })
     }
 
-    const callfunctions = () => {
-        customerDetails()
-        orderSummary()
-    }
-
+   
     const checkoutorder = () => {
-        // service.removeCart()
-        //     .then(() => {
-        //         getCart()
-        //     }).catch(() => {
-
-        //     })
         history.push('/checkout')
     }
 
-    return <div>
-        <Header cart={cart ? cart.length : 0} wishlist={wishlist ? wishlist.length : 0} />
-        {/* wishlist ? wishItem.length : 0 */}
+    return <>
+        {/* <Header cart={cart ? cart.length : 0} wishlist={wishlist ? wishlist.length : 0} /> */}
+        <Header cart={cartData.carts ? cartData.carts.length : 0} wishlist={wishlist.length} />
 
         <div className='maincart-container'>
             <h3 className='heading'>Home/ My cart</h3>
+
             <div className='cart-container'>
-                <h3 className='my-cart'>My Cart({cart ? cart.length : 0})</h3>
-                {
-                    cart ? cart.map((cart) => {
-                        return <div >
-                            <div className='content-container'>
-                                <div className='image-cart'><img src={dontmake} alt="image" style={{ height: "105px" }, { width: "100 px" }} /></div>
-                                <div className='cart-description'>
-                                    <div className='book-nam'>{cart.product_id.bookName}</div>
-                                    <div className='author-nam'>by: {cart.product_id.author}</div>
-                                    <div className='pricetage'>Rs. {cart.product_id.price}</div>
+                <div className="inside-cart-container">
+                    <h3 className='my-cart'>My Cart({cartData.carts ? cartData.carts.length : 0})</h3>
+                    {
+                        cartData.carts ? cartData.carts.map((cart) => {
+                            return <div className="mid-cart" >
+                                <div className='content-container'>
+                                    <div className='image-cart'><img src={dontmake} alt="image" style={{ height: "105px" }} /></div>
+                                    <div className='cart-description'>
+                                        <div className='book-nam'>{cart.product_id.bookName}</div>
+                                        <div className='author-nam'>by: {cart.product_id.author}</div>
+                                        <div className='pricetage'>Rs. {cart.product_id.price}</div>
+                                    </div>
+                                </div>
+                                <div className='update-cart'>
+                                    <RemoveCircleOutlineOutlinedIcon htmlColor="grey" onClick={() => { decrement(cart) }} />
+                                    <div className='cart-quantity'>{cart.quantityToBuy}</div>
+                                    <AddCircleOutlineOutlinedIcon htmlColor="grey" onClick={() => { increament(cart) }} />
+                                    <div className='remove' onClick={() => removeCart(cart)}>Remove</div>
                                 </div>
                             </div>
-                            <div className='update-cart'>
-                                <RemoveCircleOutlineOutlinedIcon htmlColor="grey" onClick={() => { decrement(cart) }} />
-                                <div className='cart-quantity'>{cart.quantityToBuy}</div>
-                                <AddCircleOutlineOutlinedIcon htmlColor="grey" onClick={() => { increament(cart) }} />
-                                <div className='remove' onClick={() => removeCart(cart)}>Remove</div>
-                            </div>
-                        </div>
-                    }) : ''
-                }
-                {
-                    orderbutton ? <button className='button-order' onClick={() => changebutton()} >Place order</button>
-                        : ""
-                }
+                        }) : ''
+                    }
+                    {
+                        orderbutton ? <button className='button-order' onClick={() => changebutton()} >Place order</button>
+                            : ""
+                    }
+                </div>
             </div>
             {
                 orderbutton ? <div className='customer-details'>
@@ -220,58 +215,59 @@ function DisplayCart() {
                     :
                     <div className='customer-detail'>
                         <div className='inside-customerdetails'>
-                            <h3 className='heading'>Customer Details</h3>
+                            <h3 className='heading1'>Customer Details</h3>
+                            <div className="field-container">
+                                <div className='text-fields'>
+                                    <div className='name-field'>
+                                        <TextField required size="medium" name="fullname" id="outlined-basic" label="Full Name" variant="outlined" style={{ width: "250px" }} onChange={(e) => changefield(e)} />
+                                    </div>
+                                    <div className='mobile-num'>
+                                        <TextField name="mobilenumber" id="outlined-basic" label="Mobile Number" variant="outlined" style={{ width: "250px" }} onChange={(e) => changefield(e)} />
+                                    </div>
+                                </div>
+                                <div className='text-fields'>
+                                    <div className='name-field'>
+                                        <TextField name="pincode" size="medium" id="outlined-basic" label="Pin code" variant="outlined" style={{ width: "250px" }} onChange={(e) => { changefield(e) }} />
+                                    </div>
+                                    <div className='mobile-num'>
+                                        <TextField name="locality" id="outlined-basic" label="Locality" variant="outlined" style={{ width: "250px" }} onChange={(e) => changefield(e)} />
+                                    </div>
+                                </div>
+                                <div className='Address'>
+                                    <TextField required name="fullAddress" id="outlined-basic" label="fullAddress" variant="outlined" style={{ width: "532px" }} multiline="true" rows="4" onChange={(e) => { changefield(e) }} value={fields.fullAddress} />
+                                </div>
+                                <div className='text-fields'>
+                                    <div className='name-field'>
+                                        <TextField required name="city" size="medium" id="outlined-basic" label="City/town" variant="outlined" style={{ width: "250px" }} onChange={(e) => { changefield(e) }} value={fields.city} />
+                                    </div>
+                                    <div className='mobile-num'>
+                                        <TextField name="landmark" id="outlined-basic" label="Landmark" variant="outlined" style={{ width: "250px" }} onChange={(e) => { changefield(e) }} />
+                                    </div>
+                                </div>
 
-                            <div className='text-fields'>
-                                <div className='name-field'>
-                                    <TextField required size="medium" name="fullname" id="outlined-basic" label="Full Name" variant="outlined" style={{ width: "250px" }} onChange={(e) => changefield(e)} />
+                                <div className='radio'>
+
+                                    <FormControl>
+                                        <FormLabel id="demo-row-radio-buttons-group-label" style={{ marginTop: "5%" }}>Type</FormLabel>
+                                        <RadioGroup
+                                            row
+                                            aria-labelledby="demo-row-radio-buttons-group-label"
+                                            style={{ marginTop: "5%" }}
+                                        >
+
+                                            <FormControlLabel required name="addressType" value="Home" control={<Radio />} label="Home" onClick={(e) => { changefield(e) }} />
+                                            <FormControlLabel required name="addressType" value="Work" control={<Radio />} label="Work" onClick={(e) => { changefield(e) }} />
+                                            <FormControlLabel required name="addressType" value="other" control={<Radio />} label="Other" onClick={(e) => { changefield(e) }} />
+
+                                        </RadioGroup>
+                                    </FormControl>
+
                                 </div>
-                                <div className='mobile-num'>
-                                    <TextField name="mobilenumber" id="outlined-basic" label="Mobile Number" variant="outlined" style={{ width: "250px" }} onChange={(e) => changefield(e)} />
-                                </div>
+                                {
+                                    continuebutton ? <button className='continue-button' onClick={() => callContinue()} >Continue</button>
+                                        : ""
+                                }
                             </div>
-                            <div className='text-fields'>
-                                <div className='name-field'>
-                                    <TextField name="pincode" size="medium" id="outlined-basic" label="Pin code" variant="outlined" style={{ width: "250px" }} onChange={(e) => { changefield(e) }} />
-                                </div>
-                                <div className='mobile-num'>
-                                    <TextField name="locality" id="outlined-basic" label="Locality" variant="outlined" style={{ width: "250px" }} onChange={(e) => changefield(e)} />
-                                </div>
-                            </div>
-                            <div className='Address'>
-                                <TextField required name="fullAddress" id="outlined-basic" label="fullAddress" variant="outlined" style={{ width: "532px" }} multiline="true" rows="4" onChange={(e) => { changefield(e) }} value={fields.fullAddress} />
-                            </div>
-                            <div className='text-fields'>
-                                <div className='name-field'>
-                                    <TextField required name="city" size="medium" id="outlined-basic" label="City/town" variant="outlined" style={{ width: "250px" }} onChange={(e) => { changefield(e) }} value={fields.city} />
-                                </div>
-                                <div className='mobile-num'>
-                                    <TextField name="landmark" id="outlined-basic" label="Landmark" variant="outlined" style={{ width: "250px" }} onChange={(e) => { changefield(e) }} />
-                                </div>
-                            </div>
-
-                            <div className='radio'>
-
-                                <FormControl>
-                                    <FormLabel id="demo-row-radio-buttons-group-label" style={{ marginTop: "5%", marginLeft: "-265%" }}>Type</FormLabel>
-                                    <RadioGroup
-                                        row
-                                        aria-labelledby="demo-row-radio-buttons-group-label"
-                                        style={{ marginTop: "5%", marginLeft: "-85%" }}
-                                    >
-
-                                        <FormControlLabel required name="addressType" value="Home" control={<Radio />} label="Home" onClick={(e) => { changefield(e) }} />
-                                        <FormControlLabel required name="addressType" value="Work" control={<Radio />} label="Work" onClick={(e) => { changefield(e) }} />
-                                        <FormControlLabel required name="addressType" value="other" control={<Radio />} label="Other" onClick={(e) => { changefield(e) }} />
-
-                                    </RadioGroup>
-                                </FormControl>
-
-                            </div>
-                            {
-                                continuebutton ? <button className='continue-button' onClick={() => callfunctions()} >Continue</button>
-                                    : ""
-                            }
                         </div>
 
                     </div>
@@ -289,14 +285,14 @@ function DisplayCart() {
                     <div className='order-details'>
                         <div className='inside-orderdetails'>Order Summary</div>
                         {
-                            cart ? cart.map((cart) => {
-                                return <div >
+                            cartData.carts ? cartData.carts.map((cart) => {
+                                return <div className="mid-order" >
                                     <div className='content-containers'>
                                         <div className='image-carts'>
-                                            <img src={dontmake} alt="image" style={{ height: "105px", width: "100 px" }} /></div>
+                                            <img src={dontmake} alt="image" style={{ height: "105px" }} /></div>
                                         <div className='cart-descriptions'>
                                             <div className='book-nams'>{cart.product_id.bookName}</div>
-                                            <div className='author-nams'>{cart.product_id.author}</div>
+                                            <div className='author-nams'>by: {cart.product_id.author}</div>
                                             <div className='pricetages'>Rs. {cart.product_id.price}</div>
                                         </div>
 
@@ -311,11 +307,10 @@ function DisplayCart() {
             }
 
         </div>
+        <br />
 
-        <div>
-            <Footer />
-        </div>
-    </div>;
+        <Footer />
+    </>;
 }
 
 export default DisplayCart;

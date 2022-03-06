@@ -23,6 +23,13 @@ const AppBar = styled(MuiAppBar, {
     border: "1px solid lightgrey",
     fontFamily: 'Product Sans Arial,sans-serif',
     fontsize: '22px',
+    // ['@media (min-width:992px)']: { // eslint-disable-line no-useless-computed-key
+    // fontsize:'22px',
+    // // width: '60%'
+    //   }
+    // [theme.breakpoints.down('sm')]: {
+    //     width: '50%'
+    // }
 
 }));
 
@@ -59,12 +66,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         padding: theme.spacing(1, 1, 1, 0),
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         width: '100%',
-
-    },
+        [theme.breakpoints.up('md')]: {
+            width: '20ch',
+        }
+    }
 }));
 
 
 export default function Header(props) {
+
     const history = useHistory()
     const theme = useTheme();
     const [searchText, setSearchText] = useState("")
@@ -74,7 +84,7 @@ export default function Header(props) {
     };
     const requestSearch = (searchval) => {
         setSearchText(searchval.target.value);
-        props.abc(searchval.target.value);
+        props.search(searchval.target.value);
     }
 
     const DisplayCart = () => {
@@ -89,7 +99,7 @@ export default function Header(props) {
         history.push("/");
     }
 
-    return <div>
+    return <>
         <AppBar >
             <Toolbar className='header-menu' >
 
@@ -111,7 +121,7 @@ export default function Header(props) {
                     </Search>
                 </div>
                 <div>
-                    <div className='header-icons' style={{ display: "flex", marginLeft: "100%" }}>
+                    <div className='header-icons' style={{ display: "flex", marginLeft: "112%" }}>
 
                         <div className='header-search-icons' >
                             <AccountCircleOutlined />Akshaykumar
@@ -137,5 +147,5 @@ export default function Header(props) {
                 </div>
             </Toolbar>
         </AppBar>
-    </div>;
+    </>;
 }

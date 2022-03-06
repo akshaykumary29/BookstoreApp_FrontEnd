@@ -1,20 +1,35 @@
-.footer {
-    background-color: black;
-    color: white;
-    font-size: 15px;
-    align-items: center;
-    height: 35px;
-    // margin: 10vh 0vw;
-    padding-left: 10%;
-    min-height: 100%;
+.footer{
     display: flex;
-    // margin-top: auto;
-    // position: absolute;
+    height: 6vh;
+    width: 100%;
+    background-color: black;
+    align-items: center;
+    color: white;
+    position: relative;
     bottom: 0;
 }
 
+.footer p{
+    font-size: 100%;
+    width: 90%;
+    position: relative;
+    padding-left: 165px;
+}
+
 @media screen and(max-width:992px) {
-    .footer{
-        
+    .footer p{
+        font-size: 100%;
+        // width: 80%;
+        position: relative;
+        padding-left: 80px;
+    }
+}
+
+@media screen and(max-width:600px) {
+    .footer p{
+        font-size: 70%;
+        // width: 90%;
+        position: relative;
+        padding-left: 80px;
     }
 }

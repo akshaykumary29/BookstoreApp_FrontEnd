@@ -9,22 +9,24 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Pagination from '@mui/material/Pagination';
 import usePagination from "../pagination/Pagination";
+import { book } from '../../redux/actions/bookAction';
+import { useDispatch, useSelector } from "react-redux";
 
 
 function DisplayBook(props) {
     const service = new BookService();
     const [books, setBooks] = useState([]);
-    const [cart, setCart] = useState([]);
-    const [wishlist, setWishlist] = useState([]);
     const [sortBy, setSortBy] = useState("")
+    const bookData = useSelector(state => state.getBookItem)
+    const dispatch = useDispatch();
 
 
     // Pagination
     let [page, setPage] = useState(0);
     const PER_PAGE = 8;
 
-    const count = Math.ceil(books.length / PER_PAGE);
-    const _DATA = usePagination(books, PER_PAGE);
+    const count = Math.ceil(bookData.books.length / PER_PAGE);
+    const _DATA = usePagination(bookData.books, PER_PAGE);
 
     const handleChange = (e, p) => {
         setPage(p);
@@ -40,40 +42,37 @@ function DisplayBook(props) {
     const getAllBooks = () => {
         service.getBooks()
             .then((res) => {
-                setBooks(res.data.result);
+                // setBooks(res.data.result);
+                dispatch(book(res.data.result))
             }).catch((err) => {
                 console.log(err);
             })
     }
 
     const addBookToCart = (book) => {
-        // setOpen(true);
         service.addToCart(book._id)
             .then((res) => {
                 console.log(res);
-                setCart(res.data.result);
-                props.getCart()
+                props.getCart() //getting cartitem count the item
                 setOpen(true);
-                getAllBooks();
+                getAllBooks();//calling book item
                 setMsg("Added To Bag")
             }).catch((err) => {
                 console.log(err);
+                setOpen(true);
                 setMsg("Added Failed")
             })
     }
 
     const addBookToWishList = (book) => {
-        setOpen(true);
-        console.log(book._id);
         service.addBookToWishList(book._id)
             .then((res) => {
-                console.log(res);
-                setWishlist(res.data.result);
-                props.getWishlist()
+                props.getWishlist() //getting wishitem count the item
+                setOpen(true);
                 getAllBooks();
                 setMsg("Wishlist Added")
             }).catch((err) => {
-                console.log(err);
+                setOpen(true);
                 setMsg("Wishlist Faild")
             })
     }
@@ -104,7 +103,6 @@ function DisplayBook(props) {
 
     //sort the books
     const handleSorting = (e) => {
-        console.log(e.target.value);
         let val = e.target.value;
         switch (val) {
             case "hightolow":
@@ -114,7 +112,7 @@ function DisplayBook(props) {
                 lowToHigh();
                 break;
             case "newarrival":
-                aToz();
+                aToZ();
                 break;
             default:
                 console.log("Invalid");
@@ -122,21 +120,21 @@ function DisplayBook(props) {
     }
 
     const highToLow = () => {
-        let htol = books.sort((a, b) => a.price - b.price).reverse();
-        console.log(htol);
-        setSortBy(htol);
+        let htol = bookData.books.sort((a, b) => a.price - b.price).reverse();
+        // setSortBy(htol);
+        dispatch(book(htol))
     }
 
     const lowToHigh = () => {
-        let ltoh = books.sort((a, b) => a.price - b.price);
-        console.log(ltoh);
-        setSortBy(ltoh);
+        let ltoh = bookData.books.sort((a, b) => a.price - b.price);
+        // setSortBy(ltoh);
+        dispatch(book(ltoh))
     }
 
-    const aToz = () => {
-        let atoz = books.sort((a, b) => a.bookName.localeCompare(b.bookName));
-        console.log(atoz);
-        setSortBy(atoz);
+    const aToZ = () => {
+        let atoz = bookData.books.sort((a, b) => a.bookName.localeCompare(b.bookName));
+        // setSortBy(atoz);
+        dispatch(book(atoz))
     }
 
     // for snackbar
@@ -169,9 +167,9 @@ function DisplayBook(props) {
 
 
     return <div>
-        <Box className="bookContain" component="main" sx={{ flexGrow: 1, p: 8 }} >
+        <Box className="bookContain" component="main" sx={{ flexGrow: 1, p: 12 }} >
             <p className="books" >Books</p>
-            <p className="book-len">({books.length})</p>
+            <p className="book-len">({bookData.books.length})</p>
             <select className='select-menu' name="sortBy" value="sortBy" onChange={handleSorting}>
                 <option value="">Sort by relevance</option>
                 <option value="hightolow">Price:High to Low</option>
@@ -184,7 +182,7 @@ function DisplayBook(props) {
                     _DATA.currentData().filter(x => x.bookName.toLowerCase().includes(props.searchText)).map((book, index) => (
                         <div className="card" key={book._id} >
                             <div className="imageCard" >
-                                <img src={dontmake} alt="book image" />
+                                <img src={dontmake} alt="book image" width={100} />
                             </div>
                             <div className="detailsCard" >
                                 <p id="name" >Book: {book.bookName} </p>

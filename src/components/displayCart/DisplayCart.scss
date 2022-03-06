@@ -1,28 +1,28 @@
 
 .maincart-container{
-    height: 100%;
-    min-height: 525px;
-    // display: flex;
-    // margin-left: 0%;
-    margin-top: 80px;
-    // padding-right: 200px;
-    margin-right: 200px;
+    min-height: calc(100% - 45px);
+    display: flex;
+    flex-direction: column;
+    margin-top: 66px;
+    padding-left: 35px;
 
 }
 .heading{
     margin-left: 10%;
-    // margin-top: 50%;
-    margin-right: 1010px;
 }
 .cart-container{
-    width: 774px;
+    width: 812px;
     height: auto;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border: 1px solid #DCDCDC;
-    border-radius: 3px;
+    border-radius: 1px;
     margin-left: 10%;
-    margin-top: 2%;
-    padding-left: 2%;
+    margin-top: 1%;
+    display: flex;
+    
+    .inside-cart-container{
+        width: 100%;
+    }
 
 .my-cart{
     width: 150px;
@@ -30,9 +30,12 @@
     text-align: left;
     font: normal normal medium 18px/24px Roboto;
     letter-spacing: 0px;
-    // color: #0A0102;
-
+    margin-left: 3%;
 }
+.mid-cart{
+    padding-left: 40px;
+}
+
 .content-container{
     display: flex;
     
@@ -40,17 +43,17 @@
     .cart-description{
         margin-left: 3%;
         .book-nam{
-            width: 133px;
+            width: 152px;
             height: auto;
             text-align: left;
             font: normal normal normal 18px/17px Lato;
             letter-spacing: 0px;
-            // color: #0A0102;
-            margin-bottom: 15%;
+            color: #0A0102;
+            margin-bottom: 5%;
         }
         .author-nam{
-            width: 63px;
-            height: 12px;
+            width: 95px;
+            height: 6px;
             text-align: left;
             font: normal normal normal 15px/18px Lato;
             letter-spacing: 0px;
@@ -59,7 +62,7 @@
            
         }
         .pricetage{
-            width: 50px;
+            width: 60px;
             // height: 20px;
             font-weight:600 ;
         }
@@ -122,45 +125,44 @@
     border-radius: 1px;
     margin-left: 10%;
     margin-top: 1%;
-    // padding-left: -2%;
     display: flex;
     align-items: center;
     .inside-customerdetails{
         width: 100%;
     }
-    .heading{
+    .heading1{
     width: 150px;
     height: 40px;
     text-align: left;
     font: normal normal medium 18px/24px Roboto;
     letter-spacing: 0px;
-    // color: #0A0102;
-    color: #333232;
     margin-left: 3%;
+    }
+    .field-container{
+        padding-left: 40px;
     }
   .text-fields{
       display: flex;
       margin-top: 2%;
-    .name-field{
+    // .name-field{
         
-        margin-left: 8%;
-    }
+    //     // margin-left: 8%;
+    // }
     .mobile-num{
        
         margin-left: 4%;
     }
   }
   .Address{
-      margin-left: -18%;
       margin-top: 2%;
   }
-  .type{
-    //   margin-left: 5%;
-    //   margin-top: 2.5%;
-  }
-  .radio{
-      margin-left: 6%;
-  }
+//   .type{
+//     //   margin-left: 5%;
+//     //   margin-top: 2.5%;
+//   }
+//   .radio{
+//     //   margin-left: 6%;
+//   }
   .continue-button{
     width: 150px;
     height: 35px;
@@ -181,39 +183,40 @@
     border: 1px solid #DCDCDC;
     border-radius: 1px;
     margin-left: 10%;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin-top: 1%;
+    margin-bottom: 1%;
     .inside-orderdetails{
-        width: 125px;
+        width: 150px;
         height: 24px;
         text-align: left;
         font: normal normal medium 18px/24px Roboto;
         letter-spacing: 0px;
         color: #333232;
-        margin-left: 8%;
         margin-top: 3%;
         margin-left: 3%;
     }
 }
+.mid-order{
+    padding-left: 40px;
+}
 
 .content-containers{
     display: flex;
-    margin-left: 8%;
-   margin-top: 3%;
+    margin-top: 3%;
     .cart-descriptions{
         margin-left: 3%;
         .book-nams{
-            width: 133px;
+            width: 152px;
             height: auto;
             text-align: left;
             font: normal normal normal 18px/17px Lato;
             letter-spacing: 0px;
             color: #0A0102;
-            margin-bottom: 15%;
+            margin-bottom: 5%;
         }
         .author-nams{
-            width: 63px;
-            height: 12px;
+            width: 95px;
+            height: 6px;
             text-align: left;
             font: normal normal normal 15px/18px Lato;
             letter-spacing: 0px;
@@ -221,7 +224,7 @@
             margin-bottom: 15%;
         }
         .pricetages{
-            width: 50px;
+            width: 60px;
             font-weight:600 ;
         }
     }
@@ -237,26 +240,6 @@
     border: none;
     margin-bottom: 2%;
 }
-
-// .footer-cart{
-//     margin: 10vh 0vw 0vh 0vw;
-//     height: 35px;
-//     color: whitesmoke;
-//     background-color: black;
-//     border: 1px solid black;
-// }
-
-
-// .footer {
-//     background-color: black;
-//     color: white;
-//     font-size: 15px;
-//     // align-items: center;
-//     height: 40px;
-//     margin: 150vh 0vw;
-//     // padding-right: 40%;
-//     min-height: 100%;
-// }
 
 @media screen and (max-width:600px) {
     .displayCard{

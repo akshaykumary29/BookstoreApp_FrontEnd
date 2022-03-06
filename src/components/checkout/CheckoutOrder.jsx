@@ -16,6 +16,7 @@ function CheckoutOrder() {
     return (
         <>
             <Header />
+
             <div className='checkout-container'>
                 <div className='image'>
                     <img src={background} alt="Add image" />
@@ -28,7 +29,7 @@ function CheckoutOrder() {
 
 
                 <table className='information'>
-                    <tr className='headi'>
+                    <tr className='head1'>
                         <td className='email'>
                             Email us
                         </td>
@@ -45,9 +46,8 @@ function CheckoutOrder() {
                     <button className='shopping-button' onClick={() => navDashboard()}>Continue Shopping</button>
                 </div>
             </div>
-            <div>
-                <Footer />
-            </div>
+
+            <Footer />
         </>
     )
 }

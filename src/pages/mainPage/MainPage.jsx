@@ -7,8 +7,12 @@ import Signup from "../signup/Signup";
 export default function MainPage() {
     const [update, setUpdate] = React.useState(true)
 
-    const register = () => {
-        setUpdate(!update)
+    const login = () => {
+        setUpdate(true)
+    }
+
+    const signup = () => {
+        setUpdate(false)
     }
 
     return (
@@ -17,15 +21,16 @@ export default function MainPage() {
                 <img className='mainLogo' src={logo} alt="this is logo" />
                 <p className='logoname' >ONLINE BOOK SHOPPING</p>
                 <div className='loginSignin' >
-                    <span className='directLogin' onClick={register} >
+                    <div className='directLogin' onClick={login} >
                         LOGIN
-                    </span>
-                    <span className='directSignup' onClick={register} >
+                    </div>
+                    <div className='directSignup' onClick={signup} >
                         SIGNUP
-                    </span>
-                </div>
-                <div className='loginSignupContainer' >
-                    {update ? <Login /> : <Signup />}
+                    </div>
+
+                    <div className='loginSignupContainer' >
+                        {update ? <Login /> : <Signup />}
+                    </div>
                 </div>
             </div>
         </div>

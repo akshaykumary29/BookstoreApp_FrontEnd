@@ -1,136 +1,140 @@
-$backColor: #f5f5f5;
+// $backColor: #f5f5f5;
 
-.mainPageContainer {
-    background: #c5bfbf 0% 0% no-repeat padding-box;
-    margin: 0px;
-    height: 760px;
-    // height: 100vh;
-    // width: 100%;
+// .mainPageContainer {
+//     background: #c5bfbf 0% 0% no-repeat padding-box;
+//     margin: 0px;
+//     height: 760px;
+//     // height: 100vh;
+//     // width: 100%;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     .midBackground {
+//         display: flex;
+//         flex-direction: column;
+//         border-radius: 21px;
+//         width: 624px;
+//         height: 391px;
+//         // height: 380px;
+//         background-color: $backColor;
+//         .mainLogo {
+//             width: 245px;
+//             height: 245px;
+//             border-radius: 200px;
+//             margin: 7vh 30vw 0vh 2.5vw;
+//             // margin: 7vh 16vw 0vh 2.5vw;
+//         }
+//         .logoname {
+//             display: flex;
+//             background-color: $backColor;
+//             font-size: 18px;
+//             font-weight: bold;
+//             letter-spacing: 0px;
+//             color: #0a0102;
+//             // text-transform: uppercase;
+//             margin: 2vh 4vw;
+//         }
+//     }
+//     .loginSignin {
+//             display: flex;
+//             // justify-content: center;
+//             width: 389px;
+//             height: 425px;
+//             background-color: white;
+//             border: #e4e4e4 1px;
+//             box-shadow: -1px -1px 5px rgb(153, 150, 150),
+//                     1px 1px 10px rgb(153, 150, 150);
+//             margin: -50vh 20vw;
+//             .directLogin {
+//                 width: 72px;
+//                 height: 33px;
+//                 font-size: 25px;
+//                 font-weight: bold;
+//                 margin: 1vh 4vw;
+//             }
+//             .directSignup {
+//                 width: 89px;
+//                 height: 33px;
+//                 font-size: 25px;
+//                 font-weight: bold;
+//                 margin: 1vh 0vw;
+//             }
+//             .loginSignupContainer{
+//                  width: 350px;
+//                  margin-left: -70%;
+//                  margin-top: 6vh; 
+//              }
+//         }
+// }
+
+
+.mainPageContainer{
+    height: 100vh;
+    width: 100%;
+    background: #a7a4a4 0% 0% no-repeat padding-box; 
     display: flex;
-    align-items: center;
     justify-content: center;
-    .midBackground {
+    align-items: center;
+    .midBackground{
         display: flex;
-        flex-direction: column;
-        border-radius: 21px;
+        flex-direction: column  ;
         width: 624px;
         height: 391px;
-        // height: 380px;
-        background-color: $backColor;
-        .mainLogo {
-            width: 245px;
-            height: 245px;
-            border-radius: 200px;
-            margin: 7vh 30vw 0vh 2.5vw;
-            // margin: 7vh 16vw 0vh 2.5vw;
-        }
-        .logoname {
-            display: flex;
-            background-color: $backColor;
-            font-size: 18px;
+        background: #F5F5F5 0% 0% no-repeat padding-box;
+        border-radius: 21px;
+   
+    .mainLogo{
+        width: 245px;
+        height: 245px;
+        border-radius: 200px;
+        margin-left: 5%;
+        margin-top: 10%;
+         
+    }
+    .logoname{
+        display: flex;
+        background-color: #f5f5f5;
+        font-size: 16px;
+        font-weight: bold;
+        letter-spacing: 0px;
+        color: #0a0102;
+        margin-left: 10%;
+        margin-top: 20px;
+    }
+   
+    }
+    .loginSignin{
+        display: flex;
+        width: 373px;
+        height: 425px;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 5px 15px #00000029;
+        border: 1px solid #E4E4E4;
+        border-radius: 6px;
+        opacity: 1;
+        margin-left: 48%;
+        margin-top: -61%;
+        margin-bottom: -120%;
+        .directLogin{
+            width: 72px;
+            height: 33px;
+            font-size: 25px;
             font-weight: bold;
-            letter-spacing: 0px;
-            color: #0a0102;
-            // text-transform: uppercase;
-            margin: 2vh 4vw;
+           margin-top: 20px;
+            margin-left: 70px;
+        }
+        .directSignup{
+            width: 89px;
+            height: 33px;
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-left: 65px;  
+        }
+        .loginSignupContainer{
+            width: 350px;
+            margin-left: -80%;
+            margin-top: 7vh; 
         }
     }
-    .loginSignin {
-            display: flex;
-            // justify-content: center;
-            width: 389px;
-            height: 425px;
-            background-color: white;
-            border: #e4e4e4 1px;
-            box-shadow: -1px -1px 5px rgb(153, 150, 150),
-                    1px 1px 10px rgb(153, 150, 150);
-            margin: -50vh 20vw;
-            .directLogin {
-                width: 72px;
-                height: 33px;
-                font-size: 25px;
-                font-weight: bold;
-                margin: 1vh 4vw;
-            }
-            .directSignup {
-                width: 89px;
-                height: 33px;
-                font-size: 25px;
-                font-weight: bold;
-                margin: 1vh 0vw;
-            }
-            .loginsignincomponents{
-                 width: 350px;
-                 margin-left: -70%;
-                 margin-top: 6vh; 
-             }
-        }
 }
-
-
-// .mainPageContainer{
-//     height: 100vh;
-//     width: 100%;
-//     background: #a7a4a4 0% 0% no-repeat padding-box;
- 
-//     display: flex;
-   
-//     justify-content: center;
-//     align-items: center;
-//     .midBackground{
-//     display: flex;
-//      flex-direction: column  ;
-//     width: 624px;
-//     height: 391px;
-//     background: #F5F5F5 0% 0% no-repeat padding-box;
-//     border-radius: 21px;
-   
-//     .mainLogo{
-//         width: 245px;
-//         height: 245px;
-//         border-radius: 200px;
-//         margin-left: 5%;
-//         margin-top: 10%;
-         
-//     }
-//     .logoname{
-//         margin-left: -50%;
-//         margin-top: 20px;
-//     }
-   
-//     }
-//     .loginSignin{
-//         display: flex;
-//         width: 389px;
-//         height: 425px;
-//         background: #FFFFFF 0% 0% no-repeat padding-box;
-//         box-shadow: 0px 5px 15px #00000029;
-//         border: 1px solid #E4E4E4;
-//         border-radius: 6px;
-//         opacity: 1;
-//         margin-left: 45%;
-//         margin-top: -59%;
-//         margin-bottom: -50%;
-//         .directLogin{
-//             width: 72px;
-//             height: 33px;
-//             font-size: 25px;
-//             font-weight: bold;
-//            margin-top: 30px;
-//             margin-left: 30px;
-//         }
-//         .directSignup{
-//             width: 89px;
-//             height: 33px;
-//             font-size: 25px;
-//             font-weight: bold;
-//             margin-top: 30px;
-//             margin-left: 30px;  
-//         }
-//         .loginsignincomponents{
-//             width: 350px;
-//             margin-left: -70%;
-//             margin-top: 6vh; 
-//         }
-//     }
-// }
